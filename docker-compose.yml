@@ -1,0 +1,10 @@
+services:
+  manu_dev:
+    container_name: manu_dev
+    environment:
+      PORT: ${PORT}
+    image: manu_dev
+    volumes:
+      - type: bind
+        source: .
+        target: /app/
