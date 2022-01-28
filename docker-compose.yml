@@ -3,7 +3,7 @@ services:
     container_name: manu_dev
     environment:
       PORT: ${PORT}
-    image: manu_dev
+    image: manu_dev:0.1
     volumes:
       - type: bind
         source: .

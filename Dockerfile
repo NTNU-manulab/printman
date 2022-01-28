@@ -1,6 +1,6 @@
 FROM node:17-alpine
-RUN yarn global add typescript ts-node 
+RUN npm install -g typescript ts-node turbo
 WORKDIR /app
 COPY . .
-RUN yarn install --production=false
-ENTRYPOINT [ "yarn","run","dev" ]
+RUN npm install
+ENTRYPOINT [ "npx", "turbo", "run", "dev" ]
