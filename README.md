@@ -8,17 +8,15 @@ With this software, all authorized people can log into the web interface and man
 
 To get started, follow these steps in order:
 1) [Install Node.js v17 or above](https://nodejs.org/en/)
-2) Open a terminal window with admin rights and run `corepack enable`
-3) Clone this repository to a folder on your machine
-4) Run `yarn install` in the cloned folder
+2) Clone this repository to a folder on your machine
+3) Run `npm install` in the cloned folder
 
-### Develop
+### Running apps in develop mode
 
-To develop all apps and packages, run the following command:
+To run the apps in develop mode, run the following command at the root of the project:
 
 ```
-cd manu
-yarn run dev
+npm run dev
 ```
 
 ### Apps and Packages
@@ -47,11 +45,8 @@ This turborepo has some additional tools already set up:
 To build all apps and packages, run the following command:
 
 ```
-cd my-turborepo
-yarn run build
+npm run build
 ```
-
-
 
 ### Remote Caching
 
