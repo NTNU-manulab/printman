@@ -1,7 +1,126 @@
-import Button from '@mui/material/Button';
-import React from 'react';
-import PrinterCard from "ui/PrinterCard"
+import Button from "@mui/material/Button"
+import { Box, Card } from "@mui/material"
+import React from "react"
+import { PrinterCard } from "../../components/PrinterCard"
 
 export default function index() {
-  return <PrinterCard />;
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        flexWrap: "wrap",
+        justifyContent: "space-evenly",
+        alignContent: "flex-start",
+      }}
+    >
+      <PrinterCard
+        name="Printer1"
+        status="READY"
+        timeRemaining={28548.6793776905}
+        totalTime={37090.81515756399}
+      />
+      <PrinterCard
+        name="Printer1"
+        status="READY"
+        timeRemaining={28548.6793776905}
+        totalTime={37090.81515756399}
+      />
+      <PrinterCard
+        name="Printer1"
+        status="READY"
+        timeRemaining={28548.6793776905}
+        totalTime={37090.81515756399}
+      />
+      <PrinterCard
+        name="Printer1"
+        status="READY"
+        timeRemaining={28548.6793776905}
+        totalTime={37090.81515756399}
+      />
+      <PrinterCard
+        name="Printer1"
+        status="READY"
+        timeRemaining={28548.6793776905}
+        totalTime={37090.81515756399}
+      />
+      <PrinterCard
+        name="Printer1"
+        status="READY"
+        timeRemaining={28548.6793776905}
+        totalTime={37090.81515756399}
+      />
+      <PrinterCard
+        name="Printer1"
+        status="READY"
+        timeRemaining={28548.6793776905}
+        totalTime={37090.81515756399}
+      />
+      <PrinterCard
+        name="Printer1"
+        status="READY"
+        timeRemaining={28548.6793776905}
+        totalTime={37090.81515756399}
+      />
+      <PrinterCard
+        name="Printer1"
+        status="READY"
+        timeRemaining={28548.6793776905}
+        totalTime={37090.81515756399}
+      />
+      <PrinterCard
+        name="Printer1"
+        status="READY"
+        timeRemaining={28548.6793776905}
+        totalTime={37090.81515756399}
+      />
+      <PrinterCard
+        name="Printer1"
+        status="READY"
+        timeRemaining={28548.6793776905}
+        totalTime={37090.81515756399}
+      />
+      <PrinterCard
+        name="Printer1"
+        status="READY"
+        timeRemaining={28548.6793776905}
+        totalTime={37090.81515756399}
+      />
+      <PrinterCard
+        name="Printer1"
+        status="READY"
+        timeRemaining={28548.6793776905}
+        totalTime={37090.81515756399}
+      />
+      <PrinterCard
+        name="Printer1"
+        status="READY"
+        timeRemaining={28548.6793776905}
+        totalTime={37090.81515756399}
+      />
+      <PrinterCard
+        name="Printer1"
+        status="READY"
+        timeRemaining={28548.6793776905}
+        totalTime={37090.81515756399}
+      />
+      <PrinterCard
+        name="Printer1"
+        status="READY"
+        timeRemaining={28548.6793776905}
+        totalTime={37090.81515756399}
+      />
+      <PrinterCard
+        name="Printer1"
+        status="READY"
+        timeRemaining={28548.6793776905}
+        totalTime={37090.81515756399}
+      />
+      <PrinterCard
+        name="Printer1"
+        status="READY"
+        timeRemaining={28548.6793776905}
+        totalTime={37090.81515756399}
+      />
+    </Box>
+  )
 }
