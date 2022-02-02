@@ -1,9 +1,21 @@
 import Button from "@mui/material/Button"
 import { Box, Card } from "@mui/material"
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { PrinterCard } from "../../components/PrinterCard"
+import Axios from "axios"
+import { copyFileSync } from "fs"
 
 export default function index() {
+  const [printers, setPrinters] = useState([])
+
+  useEffect(() => {
+    ;(async () => {
+      let printers = (await Axios.get("http://localhost:3001/printers")).data
+      console.log(printers)
+      setPrinters(printers)
+    })()
+  }, [])
+
   return (
     <Box
       sx={{
