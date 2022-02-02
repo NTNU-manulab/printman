@@ -9,9 +9,14 @@ type PrinterCardProps = {
   totalTime: number
 }
 
+//todo:
+// change to use progress number from OP for progress bar
+// calculate remaining time value using estimatedTime * progress, or use starting time and diff from Date.now()?
+// color card content BG based on status value (change to list of booleans like OP gives?)
 export const PrinterCard = (props: PrinterCardProps) => {
   const { name, status, timeRemaining, totalTime } = props
   const [progress, setProgress] = useState(0)
+  const [estimatedTime, setEstimatedTime] = useState(timeRemaining)
 
   // value faker code stolen from https://mui.com/components/progress/#linear-determinate
   useEffect(() => {

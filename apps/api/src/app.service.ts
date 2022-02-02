@@ -11,12 +11,12 @@ export class AppService {
     let printers = []
 
     for (let i = 0; i < 30; i++) {
-      let randTotalTime = 10000 + Math.random() * 50000
+      let randTotalTime = 1000 + Math.random() * 5000
 
       let printer = {
         name: `Printer ${i}`,
         state: "Printing",
-        timeRemaining: randTotalTime - Math.random() * 10000,
+        timeRemaining: randTotalTime - Math.random() * 1000,
         totalTime: randTotalTime,
       }
       printers[i] = printer
