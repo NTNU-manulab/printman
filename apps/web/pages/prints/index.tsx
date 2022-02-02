@@ -1,9 +1,16 @@
 import Button from "@mui/material/Button"
 import { Box, Card } from "@mui/material"
-import React, { useEffect, useState } from "react"
+import React, { ReactNode, useEffect, useState } from "react"
 import { PrinterCard } from "../../components/PrinterCard"
 import Axios from "axios"
 import { copyFileSync } from "fs"
+
+type PrinterCardProps = {
+  name: string
+  state: string
+  timeRemaining: number
+  totalTime: number
+}
 
 export default function index() {
   const [printers, setPrinters] = useState([])
@@ -16,6 +23,21 @@ export default function index() {
     })()
   }, [])
 
+  // Renders PrinterCard elements from list.
+  const PrinterList = (): JSX.Element => {
+    //todo: elements need keys
+    const printerList: ReactNode[] = printers.map((p: PrinterCardProps) => (
+      <PrinterCard
+        name={p.name}
+        status={p.state}
+        timeRemaining={p.timeRemaining}
+        totalTime={p.totalTime}
+      />
+    ))
+
+    return <React.Fragment> {printerList} </React.Fragment>
+  }
+
   return (
     <Box
       sx={{
@@ -25,114 +47,7 @@ export default function index() {
         alignContent: "flex-start",
       }}
     >
-      <PrinterCard
-        name="Printer1"
-        status="READY"
-        timeRemaining={28548.6793776905}
-        totalTime={37090.81515756399}
-      />
-      <PrinterCard
-        name="Printer1"
-        status="READY"
-        timeRemaining={28548.6793776905}
-        totalTime={37090.81515756399}
-      />
-      <PrinterCard
-        name="Printer1"
-        status="READY"
-        timeRemaining={28548.6793776905}
-        totalTime={37090.81515756399}
-      />
-      <PrinterCard
-        name="Printer1"
-        status="READY"
-        timeRemaining={28548.6793776905}
-        totalTime={37090.81515756399}
-      />
-      <PrinterCard
-        name="Printer1"
-        status="READY"
-        timeRemaining={28548.6793776905}
-        totalTime={37090.81515756399}
-      />
-      <PrinterCard
-        name="Printer1"
-        status="READY"
-        timeRemaining={28548.6793776905}
-        totalTime={37090.81515756399}
-      />
-      <PrinterCard
-        name="Printer1"
-        status="READY"
-        timeRemaining={28548.6793776905}
-        totalTime={37090.81515756399}
-      />
-      <PrinterCard
-        name="Printer1"
-        status="READY"
-        timeRemaining={28548.6793776905}
-        totalTime={37090.81515756399}
-      />
-      <PrinterCard
-        name="Printer1"
-        status="READY"
-        timeRemaining={28548.6793776905}
-        totalTime={37090.81515756399}
-      />
-      <PrinterCard
-        name="Printer1"
-        status="READY"
-        timeRemaining={28548.6793776905}
-        totalTime={37090.81515756399}
-      />
-      <PrinterCard
-        name="Printer1"
-        status="READY"
-        timeRemaining={28548.6793776905}
-        totalTime={37090.81515756399}
-      />
-      <PrinterCard
-        name="Printer1"
-        status="READY"
-        timeRemaining={28548.6793776905}
-        totalTime={37090.81515756399}
-      />
-      <PrinterCard
-        name="Printer1"
-        status="READY"
-        timeRemaining={28548.6793776905}
-        totalTime={37090.81515756399}
-      />
-      <PrinterCard
-        name="Printer1"
-        status="READY"
-        timeRemaining={28548.6793776905}
-        totalTime={37090.81515756399}
-      />
-      <PrinterCard
-        name="Printer1"
-        status="READY"
-        timeRemaining={28548.6793776905}
-        totalTime={37090.81515756399}
-      />
-      <PrinterCard
-        name="Printer1"
-        status="READY"
-        timeRemaining={28548.6793776905}
-        totalTime={37090.81515756399}
-      />
-      <PrinterCard
-        name="Printer1"
-        status="READY"
-        timeRemaining={28548.6793776905}
-        totalTime={37090.81515756399}
-      />
-      <PrinterCard
-        name="Printer1"
-        status="READY"
-        timeRemaining={28548.6793776905}
-        totalTime={37090.81515756399}
-      />
+      <PrinterList />
     </Box>
   )
 }
