@@ -3,7 +3,6 @@ import { Box, Card } from "@mui/material"
 import React, { ReactNode, useEffect, useState } from "react"
 import { PrinterCard } from "../../components/PrinterCard"
 import Axios from "axios"
-import { copyFileSync } from "fs"
 
 type PrinterCardProps = {
   name: string
@@ -12,12 +11,14 @@ type PrinterCardProps = {
   totalTime: number
 }
 
+const API_URL = process.env.API_URL || "http://localhost:3001"
+
 export default function index() {
   const [printers, setPrinters] = useState([])
 
   useEffect(() => {
     ;(async () => {
-      let printers = (await Axios.get("http://localhost:3001/printers")).data
+      let printers = (await Axios.get(API_URL + "/printer")).data
       console.log(printers)
       setPrinters(printers)
     })()

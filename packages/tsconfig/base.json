@@ -19,8 +19,5 @@
     "strict": true,
     "typeRoots": ["node_modules/@types"]
   },
-  "exclude": ["node_modules"],
-  "extends": [
-    "prettier"
-  ]
+  "exclude": ["node_modules"]
 }
