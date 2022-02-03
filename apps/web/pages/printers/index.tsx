@@ -1,15 +1,9 @@
 import Button from "@mui/material/Button"
 import { Box, Card } from "@mui/material"
 import React, { ReactNode, useEffect, useState } from "react"
-import { PrinterCard } from "../../components/PrinterCard"
+import { PrinterGridModel } from "models"
 import Axios from "axios"
-
-type PrinterCardProps = {
-  name: string
-  state: string
-  timeRemaining: number
-  totalTime: number
-}
+import { PrinterCard } from "../../components/PrinterCard"
 
 const API_URL = process.env.API_URL || "http://localhost:3001"
 
@@ -27,11 +21,11 @@ export default function index() {
   // Renders PrinterCard elements from list.
   const PrinterList = (): JSX.Element => {
     //todo: elements need keys
-    const printerList: ReactNode[] = printers.map((p: PrinterCardProps) => (
+    const printerList: ReactNode[] = printers.map((p: PrinterGridModel) => (
       <PrinterCard
         name={p.name}
-        status={p.state}
-        timeRemaining={p.timeRemaining}
+        state={p.state}
+        printProgress={p.printProgress}
         totalTime={p.totalTime}
       />
     ))

@@ -1,22 +1,17 @@
 import { CardContent, CardMedia, LinearProgress } from "@mui/material"
 import Card from "@mui/material/Card"
 import React, { Fragment, useEffect, useState } from "react"
-
-type PrinterCardProps = {
-  name: string
-  status: string
-  timeRemaining: number
-  totalTime: number
-}
+import { PrinterGridModel } from "models"
 
 //todo:
 // change to use progress number from OP for progress bar
 // calculate remaining time value using estimatedTime * progress, or use starting time and diff from Date.now()?
 // color card content BG based on status value (change to list of booleans like OP gives?)
-export const PrinterCard = (props: PrinterCardProps) => {
-  const { name, status, timeRemaining, totalTime } = props
-  const [progress, setProgress] = useState(0)
-  const [estimatedTime, setEstimatedTime] = useState(timeRemaining)
+export const PrinterCard = (props: PrinterGridModel) => {
+  const { name, state, printProgress, totalTime } = props
+  const [progress, setProgress] = useState(printProgress)
+  const [estimatedTime, setEstimatedTime] = useState(totalTime)
+  const [remainingTime, setRemainingTime] = useState(totalTime)
 
   // value faker code stolen from https://mui.com/components/progress/#linear-determinate
   useEffect(() => {
@@ -39,7 +34,7 @@ export const PrinterCard = (props: PrinterCardProps) => {
     <Card sx={{ maxWidth: 2 / 9, mt: 2 }}>
       <CardMedia image="prototype3.local.jpeg" component="img" />
       <CardContent> {name}</CardContent>
-      <CardContent>{status}</CardContent>
+      <CardContent>{state}</CardContent>
       <LinearProgress
         sx={{ height: 20 }}
         variant="determinate"

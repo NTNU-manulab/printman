@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common"
-import { json } from "stream/consumers"
+import { PrinterGridModel } from "models"
 
 @Injectable()
 export class PrinterService {
@@ -9,10 +9,10 @@ export class PrinterService {
     for (let i = 0; i < 30; i++) {
       let randTotalTime = 1000 + Math.random() * 5000
 
-      let printer = {
+      let printer: PrinterGridModel = {
         name: `Printer ${i}`,
         state: "Printing",
-        timeRemaining: randTotalTime - Math.random() * 1000,
+        printProgress: Math.random() * 100,
         totalTime: randTotalTime,
       }
       printers[i] = printer

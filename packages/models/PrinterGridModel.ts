@@ -1,6 +1,10 @@
-export type PrinterCardProps = {
+import { PrinterModule } from "src/printer/printer.module"
+
+type PrinterCardProps = {
   name: string
-  status: string
-  timeRemaining: number
+  state: string
+  printProgress: number
   totalTime: number
 }
+
+export default PrinterCardProps
