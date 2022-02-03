@@ -7,7 +7,7 @@ export class PrinterService {
     let printers = []
 
     for (let i = 0; i < 30; i++) {
-      let randTotalTime = 1000 + Math.random() * 5000
+      let randTotalTime = 10000 + Math.random() * 50000
 
       let printer: PrinterGridModel = {
         name: `Printer ${i}`,
