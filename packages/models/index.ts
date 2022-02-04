@@ -1,3 +1,3 @@
 import PrinterGridModel from "./PrinterGridModel"
 
-export { PrinterGridModel }
+export type { PrinterGridModel }

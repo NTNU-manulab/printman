@@ -4,6 +4,8 @@ import React, { ReactNode, useEffect, useState } from "react"
 import { PrinterGridModel } from "models"
 import Axios from "axios"
 import { PrinterCard } from "../../components/PrinterCard"
+import { useDrop, DndProvider } from "react-dnd"
+import { HTML5Backend } from "react-dnd-html5-backend"
 
 const API_URL = process.env.API_URL || "http://localhost:3001"
 
@@ -24,7 +26,7 @@ export default function index() {
     const printerList: ReactNode[] = printers.map((p: PrinterGridModel) => (
       <PrinterCard
         name={p.name}
-        state={p.state}
+        printerState={p.printerState}
         printProgress={p.printProgress}
         totalTime={p.totalTime}
       />
