@@ -10,8 +10,8 @@ export class AppController {
     return this.appService.getHello()
   }
 
-  @Get("printers")
-  getPrinters(): string {
-    return this.appService.getPrinters()
-  }
+  // @Get("printers")
+  // getPrinters(): string {
+  //   return this.appService.getPrinters()
+  // }
 }
