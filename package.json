@@ -23,6 +23,7 @@
   },
   "packageManager": "npm@8.3.1",
   "dependencies": {
-    "dotenv": "^16.0.0"
+    "dotenv": "^16.0.0",
+    "json-mocker": "^1.2.2"
   }
 }
