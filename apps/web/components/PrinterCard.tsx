@@ -58,9 +58,9 @@ export const PrinterCard = (props: PrinterGridModel) => {
 
   // value faker code stolen from https://mui.com/components/progress/#linear-determinate
   useEffect(() => {
-    setRemainingSeconds(() => {
-      return estimatedTime - estimatedTime * (progress / 100)
-    })
+    // setRemainingSeconds(() => {
+    //   return estimatedTime - estimatedTime * (progress / 100)
+    // })
 
     const timer = setInterval(() => {
       setProgress(oldProgress => {

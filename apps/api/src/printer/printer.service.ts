@@ -19,4 +19,16 @@ export class PrinterService {
     }
     return JSON.stringify(printers)
   }
+
+  getPrinter(): string {
+    let randTotalTime = 10000 + Math.random() * 50000
+
+    let printer: PrinterGridModel = {
+      name: `Printer 1`,
+      state: "Printing",
+      printProgress: Math.random() * 100,
+      totalTime: randTotalTime,
+    }
+    return JSON.stringify(printer)
+  }
 }
