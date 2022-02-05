@@ -135,8 +135,8 @@ export const PrinterCard = (props: PrinterGridModel) => {
   return (
     <Card
       sx={{
-        maxWidth: 350,
-        minWidth: 300,
+        // maxWidth: 350,
+        // minWidth: 300,
         bgcolor: cardColour,
         display: "flex",
         flexDirection: "column",
