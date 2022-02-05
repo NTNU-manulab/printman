@@ -1,4 +1,14 @@
-import { Container, createTheme, styled, ThemeProvider } from "@mui/material"
+import {
+  AppBar,
+  Box,
+  Button,
+  Container,
+  createTheme,
+  styled,
+  ThemeProvider,
+  Toolbar,
+  Typography,
+} from "@mui/material"
 import Axios from "axios"
 import { PrinterGridModel } from "models"
 import React, { useEffect, useState } from "react"
@@ -67,20 +77,57 @@ export default function index() {
   // }))
 
   return (
-    <Container
-      fixed
-      sx={{
-        display: "grid",
-        rowGap: theme.spacing(2),
-        columnGap: theme.spacing(2),
-        margin: "auto",
-        [theme.breakpoints.up("xs")]: {
-          padding: { xs: 0, md: 0 },
-        },
-      }}
-    >
-      <PrinterStatusBar printerStates={printerStates} />
-      <PrinterGrid printers={printers} />
-    </Container>
+    <>
+      <AppBar position="sticky" sx={{ mb: theme.spacing(2) }}>
+        <Toolbar>
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
+          >
+            MANULAB PRINTFARM
+          </Typography>
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+            <Button
+              key={1}
+              onClick={() => {}}
+              sx={{ my: 2, color: "white", display: "block" }}
+            >
+              PRINTERS
+            </Button>
+            <Button
+              key={1}
+              onClick={() => {}}
+              sx={{ my: 2, color: "white", display: "block" }}
+            >
+              ADMIN
+            </Button>
+            <Button
+              key={1}
+              onClick={() => {}}
+              sx={{ my: 2, color: "white", display: "block" }}
+            >
+              ABOUT
+            </Button>
+          </Box>
+        </Toolbar>
+      </AppBar>
+      <Container
+        fixed
+        sx={{
+          display: "grid",
+          rowGap: theme.spacing(2),
+          columnGap: theme.spacing(2),
+          margin: "auto",
+          [theme.breakpoints.up("xs")]: {
+            padding: { xs: 0, md: 0 },
+          },
+        }}
+      >
+        <PrinterStatusBar printerStates={printerStates} />
+        <PrinterGrid printers={printers} />
+      </Container>
+    </>
   )
 }
