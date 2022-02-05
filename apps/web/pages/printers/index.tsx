@@ -1,11 +1,8 @@
-import Button from "@mui/material/Button"
-import { Box, Card } from "@mui/material"
-import React, { ReactNode, useEffect, useState } from "react"
-import { PrinterGridModel } from "models"
+import { Box, styled } from "@mui/material"
 import Axios from "axios"
+import { PrinterGridModel } from "models"
+import React, { ReactNode, useEffect, useState } from "react"
 import { PrinterCard } from "../../components/PrinterCard"
-import { useDrop, DndProvider } from "react-dnd"
-import { HTML5Backend } from "react-dnd-html5-backend"
 
 const API_URL = process.env.API_URL || "http://localhost:3001"
 
@@ -35,19 +32,35 @@ export default function index() {
     return <React.Fragment> {printerList} </React.Fragment>
   }
 
+  const PrinterGrid = styled(Box)(({ theme }) => ({
+    [theme.breakpoints.between("sm", "md")]: {
+      gridTemplateColumns: "repeat(2, 1fr)",
+    },
+    [theme.breakpoints.up("md")]: {
+      gridTemplateColumns: "repeat(3, 1fr)",
+    },
+    [theme.breakpoints.up("lg")]: {
+      gridTemplateColumns: "repeat(4, 1fr)",
+    },
+  }))
+
   return (
-    <Box
+    <PrinterGrid
       sx={{
-        display: "flex",
-        flexWrap: "wrap",
-        justifyContent: "space-evenly",
-        alignContent: "flex-start",
+        display: "grid",
+        columnGap: 2,
+        rowGap: 2,
+        justifyContent: "space-around",
+        // alignContent: "space-between",
         maxWidth: 2 / 3,
         margin: "auto",
         position: "centered",
+        mt: 2,
+        mb: 2,
       }}
     >
       <PrinterList />
-    </Box>
+    </PrinterGrid>
+    // </ThemeProvider>
   )
 }

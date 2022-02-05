@@ -1,16 +1,13 @@
+import React, { useEffect, useState } from "react"
 import {
+  Box,
+  Card,
   CardContent,
   CardMedia,
   LinearProgress,
   Typography,
-  Box,
 } from "@mui/material"
-import Card from "@mui/material/Card"
-import React, { Fragment, useEffect, useState } from "react"
 import { PrinterGridModel } from "models"
-import { time } from "console"
-import { getThemeProps } from "@mui/system"
-import { relative } from "path/posix"
 
 function LinearProgressWithLabel(props: {
   value: number
@@ -66,10 +63,6 @@ export const PrinterCard = (props: PrinterGridModel) => {
 
   // value faker code stolen from https://mui.com/components/progress/#linear-determinate
   useEffect(() => {
-    // setRemainingSeconds(() => {
-    //   return estimatedTime - estimatedTime * (progress / 100)
-    // })
-
     if (printerState.flags.printing) {
       const timer = setInterval(() => {
         setProgress(oldProgress => {
@@ -144,7 +137,6 @@ export const PrinterCard = (props: PrinterGridModel) => {
       sx={{
         maxWidth: 350,
         minWidth: 300,
-        mt: 2,
         bgcolor: cardColour,
         display: "flex",
         flexDirection: "column",
@@ -157,7 +149,7 @@ export const PrinterCard = (props: PrinterGridModel) => {
 
       <Typography>
         <CardContent> {name}</CardContent>
-        <CardContent>{printerState.name}</CardContent>
+        <CardContent>{printerState.text}</CardContent>
         {printerState.flags.printing ? (
           <CardContent>
             {remainingTimeObject.days ? remainingTimeObject.days + ` D : ` : ``}
