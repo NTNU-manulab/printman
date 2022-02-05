@@ -10,13 +10,20 @@ import React, { Fragment, useEffect, useState } from "react"
 import { PrinterGridModel } from "models"
 import { time } from "console"
 import { getThemeProps } from "@mui/system"
+import { relative } from "path/posix"
 
 function LinearProgressWithLabel(props: {
   value: number
   variant: "determinate" | "indeterminate" | "buffer" | "query" | undefined
 }) {
   return (
-    <Box sx={{ display: "flex", alignItems: "center" }}>
+    <Box
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        position: "relative",
+      }}
+    >
       <Box sx={{ width: "100%", mr: 1 }}>
         <LinearProgress
           sx={{ height: 20 }}
@@ -135,12 +142,19 @@ export const PrinterCard = (props: PrinterGridModel) => {
   return (
     <Card
       sx={{
-        maxWidth: 2 / 9,
+        maxWidth: 350,
+        minWidth: 300,
         mt: 2,
         bgcolor: cardColour,
+        display: "flex",
+        flexDirection: "column",
+        "& .MuiCardContent-root:last-child": {
+          paddingBottom: 0,
+        },
       }}
     >
       <CardMedia image="prototype3.local.jpeg" component="img" />
+
       <Typography>
         <CardContent> {name}</CardContent>
         <CardContent>{printerState.name}</CardContent>
@@ -167,10 +181,21 @@ export const PrinterCard = (props: PrinterGridModel) => {
           <CardContent />
         )}
       </Typography>
-      <LinearProgressWithLabel
-        variant="determinate"
-        value={printerState.flags.ready ? 0 : progress}
-      />
+      <CardContent
+        sx={{
+          padding: 0,
+          mr: 0,
+          ml: 0,
+          mb: 0,
+          marginTop: "auto",
+          minWidth: "100%",
+        }}
+      >
+        <LinearProgressWithLabel
+          variant="determinate"
+          value={printerState.flags.ready ? 0 : progress}
+        />
+      </CardContent>
     </Card>
   )
 }

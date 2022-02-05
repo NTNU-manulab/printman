@@ -42,6 +42,9 @@ export default function index() {
         flexWrap: "wrap",
         justifyContent: "space-evenly",
         alignContent: "flex-start",
+        maxWidth: 2 / 3,
+        margin: "auto",
+        position: "centered",
       }}
     >
       <PrinterList />
