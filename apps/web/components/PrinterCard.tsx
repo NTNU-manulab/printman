@@ -1,22 +1,26 @@
+import React, { useEffect, useState } from "react"
 import {
+  Box,
+  Card,
   CardContent,
   CardMedia,
   LinearProgress,
   Typography,
-  Box,
 } from "@mui/material"
-import Card from "@mui/material/Card"
-import React, { Fragment, useEffect, useState } from "react"
 import { PrinterGridModel } from "models"
-import { time } from "console"
-import { getThemeProps } from "@mui/system"
 
 function LinearProgressWithLabel(props: {
   value: number
   variant: "determinate" | "indeterminate" | "buffer" | "query" | undefined
 }) {
   return (
-    <Box sx={{ display: "flex", alignItems: "center" }}>
+    <Box
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        position: "relative",
+      }}
+    >
       <Box sx={{ width: "100%", mr: 1 }}>
         <LinearProgress
           sx={{ height: 20 }}
@@ -59,10 +63,6 @@ export const PrinterCard = (props: PrinterGridModel) => {
 
   // value faker code stolen from https://mui.com/components/progress/#linear-determinate
   useEffect(() => {
-    // setRemainingSeconds(() => {
-    //   return estimatedTime - estimatedTime * (progress / 100)
-    // })
-
     if (printerState.flags.printing) {
       const timer = setInterval(() => {
         setProgress(oldProgress => {
@@ -135,15 +135,21 @@ export const PrinterCard = (props: PrinterGridModel) => {
   return (
     <Card
       sx={{
-        maxWidth: 2 / 9,
-        mt: 2,
+        // maxWidth: 350,
+        // minWidth: 300,
         bgcolor: cardColour,
+        display: "flex",
+        flexDirection: "column",
+        "& .MuiCardContent-root:last-child": {
+          paddingBottom: 0,
+        },
       }}
     >
       <CardMedia image="prototype3.local.jpeg" component="img" />
+
       <Typography>
         <CardContent> {name}</CardContent>
-        <CardContent>{printerState.name}</CardContent>
+        <CardContent>{printerState.text}</CardContent>
         {printerState.flags.printing ? (
           <CardContent>
             {remainingTimeObject.days ? remainingTimeObject.days + ` D : ` : ``}
@@ -167,10 +173,21 @@ export const PrinterCard = (props: PrinterGridModel) => {
           <CardContent />
         )}
       </Typography>
-      <LinearProgressWithLabel
-        variant="determinate"
-        value={printerState.flags.ready ? 0 : progress}
-      />
+      <CardContent
+        sx={{
+          padding: 0,
+          mr: 0,
+          ml: 0,
+          mb: 0,
+          marginTop: "auto",
+          minWidth: "100%",
+        }}
+      >
+        <LinearProgressWithLabel
+          variant="determinate"
+          value={printerState.flags.ready ? 0 : progress}
+        />
+      </CardContent>
     </Card>
   )
 }

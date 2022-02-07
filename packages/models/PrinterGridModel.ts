@@ -1,7 +1,7 @@
 interface PrinterGridModel {
   name: string
   printerState: {
-    name: string
+    text: string
     flags: {
       cancelling: boolean
       error: boolean

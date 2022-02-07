@@ -7,7 +7,7 @@ const generateMockPrinter = (printerCount: number): PrinterGridModel[] => {
     type: "printerState",
     data: [
       {
-        name: "Printing",
+        text: "Printing",
         flags: {
           operational: true,
           paused: false,
@@ -19,7 +19,7 @@ const generateMockPrinter = (printerCount: number): PrinterGridModel[] => {
         },
       },
       {
-        name: "Error",
+        text: "Error",
         flags: {
           operational: true,
           paused: false,
@@ -31,7 +31,7 @@ const generateMockPrinter = (printerCount: number): PrinterGridModel[] => {
         },
       },
       {
-        name: "Paused",
+        text: "Paused",
         flags: {
           operational: true,
           paused: true,
@@ -43,7 +43,7 @@ const generateMockPrinter = (printerCount: number): PrinterGridModel[] => {
         },
       },
       {
-        name: "Ready",
+        text: "Ready",
         flags: {
           operational: true,
           paused: false,
