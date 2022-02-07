@@ -18,7 +18,6 @@ import {
 import { TransitionProps } from "@mui/material/transitions";
 import React, { FC, useCallback, useEffect, useRef, useState } from "react";
 import { FileDrop } from "react-file-drop";
-import useKeyboardShortcut from "use-keyboard-shortcut";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -60,8 +59,6 @@ export const Dropzone: FC<React.ReactFragment> = () => {
   const onFrameDragEnter = () => {
     console.log("iFFWEUI");
   };
-  
-  useKeyboardShortcut(["Escape"], handleClose)
   return (
     <>
       <FileDrop

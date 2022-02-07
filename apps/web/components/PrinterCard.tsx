@@ -34,11 +34,10 @@ function LinearProgressWithLabel(props: {
 }
 
 //todo:
-// change to use progress number from OP for progress bar
-// calculate remaining time value using estimatedTime * progress, or use starting time and diff from Date.now()?
-// color card content BG based on status value (change to list of booleans like OP gives?)
+// color card content BG based on status value
+
 export const PrinterCard = (props: PrinterGridModel) => {
-  const { name, state, printProgress, totalTime } = props
+  const { name, printerState, printProgress, totalTime } = props
   const [progress, setProgress] = useState(printProgress)
   const [estimatedTime, setEstimatedTime] = useState(totalTime)
   const [estimatedTimeObject, setEstimatedTimeObject] = useState({
@@ -56,25 +55,29 @@ export const PrinterCard = (props: PrinterGridModel) => {
     seconds: 0,
   })
 
+  const [cardColour, setCardColour] = useState<Colour>()
+
   // value faker code stolen from https://mui.com/components/progress/#linear-determinate
   useEffect(() => {
     // setRemainingSeconds(() => {
     //   return estimatedTime - estimatedTime * (progress / 100)
     // })
 
-    const timer = setInterval(() => {
-      setProgress(oldProgress => {
-        if (oldProgress === 100) {
-          return 0
-        }
+    if (printerState.flags.printing) {
+      const timer = setInterval(() => {
+        setProgress(oldProgress => {
+          if (oldProgress === 100) {
+            return 0
+          }
 
-        const diff = Math.random()
-        return Math.min(oldProgress + diff, 100)
-      })
-    }, 1000)
+          const diff = Math.random()
+          return Math.min(oldProgress + diff, 100)
+        })
+      }, 1000)
 
-    return () => {
-      clearInterval(timer)
+      return () => {
+        clearInterval(timer)
+      }
     }
   }, [])
 
@@ -110,33 +113,64 @@ export const PrinterCard = (props: PrinterGridModel) => {
     }
   }
 
-  return (
-    <Card sx={{ maxWidth: 2 / 9, mt: 2 }}>
-      <CardMedia image="prototype3.local.jpeg" component="img" />
-      <Typography variant="div">
-        <CardContent> {name}</CardContent>
-        <CardContent>{state}</CardContent>
+  useEffect(() => {
+    setCardColour(findBackgroundColour())
+  }, [progress])
 
-        <CardContent>{`Estimated Max time: ` + estimatedTime}</CardContent>
-        <CardContent>
-        {`Estimated Remaining time: ` + remainingSeconds}
-      </CardContent>
-        <CardContent>
-          {remainingTimeObject.days ? remainingTimeObject.days + ` D : ` : ``}
-          {remainingTimeObject.hours ? remainingTimeObject.hours + ` H : ` : ``}
-          {remainingTimeObject.minutes
-            ? remainingTimeObject.minutes + ` M : `
-            : ``}
-          {remainingTimeObject.seconds + ` S`} /{" "}
-          {estimatedTimeObject.days ? estimatedTimeObject.days + ` D : ` : ``}
-          {estimatedTimeObject.hours ? estimatedTimeObject.hours + ` H : ` : ``}
-          {estimatedTimeObject.minutes
-            ? estimatedTimeObject.minutes + ` M : `
-            : ``}
-          {estimatedTimeObject.seconds + ` S`}
-        </CardContent>
+  enum Colour {
+    error = "#CC7874",
+    paused = "#FFEEA1",
+    ready = "#A8F5A2",
+    printing = "#FFFFFF",
+  }
+
+  //todo: set this as a state object instead of fucking about with sx?
+  const findBackgroundColour = (): Colour | undefined => {
+    let color = Object.entries(printerState.flags)
+      .filter(([k, v]) => v === true && k !== "operational")
+      .map(k => Object.entries(Colour).find(([ek, ev]) => ek === k[0])?.[1])[0]
+    return color
+  }
+
+  return (
+    <Card
+      sx={{
+        maxWidth: 2 / 9,
+        mt: 2,
+        bgcolor: cardColour,
+      }}
+    >
+      <CardMedia image="prototype3.local.jpeg" component="img" />
+      <Typography component={"div"}>
+        <CardContent> {name}</CardContent>
+        <CardContent>{printerState.name}</CardContent>
+        {printerState.flags.printing ? (
+          <CardContent>
+            {remainingTimeObject.days ? remainingTimeObject.days + ` D : ` : ``}
+            {remainingTimeObject.hours
+              ? remainingTimeObject.hours + ` H : `
+              : ``}
+            {remainingTimeObject.minutes
+              ? remainingTimeObject.minutes + ` M : `
+              : ``}
+            {remainingTimeObject.seconds + ` S`} /{" "}
+            {estimatedTimeObject.days ? estimatedTimeObject.days + ` D : ` : ``}
+            {estimatedTimeObject.hours
+              ? estimatedTimeObject.hours + ` H : `
+              : ``}
+            {estimatedTimeObject.minutes
+              ? estimatedTimeObject.minutes + ` M : `
+              : ``}
+            {estimatedTimeObject.seconds + ` S`}
+          </CardContent>
+        ) : (
+          <CardContent />
+        )}
       </Typography>
-      <LinearProgressWithLabel variant="determinate" value={progress} />
+      <LinearProgressWithLabel
+        variant="determinate"
+        value={printerState.flags.ready ? 0 : progress}
+      />
     </Card>
   )
 }

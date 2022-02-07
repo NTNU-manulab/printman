@@ -1,10 +1,12 @@
-import Button from "@mui/material/Button";
-import { Box, Card } from "@mui/material";
-import React, { ReactNode, useEffect, useState } from "react";
-import { PrinterGridModel } from "models";
-import Axios from "axios";
-import { PrinterCard } from "../../components/PrinterCard";
-import { Dropzone } from "../../components/Dropzone";
+import Button from "@mui/material/Button"
+import { Box, Card } from "@mui/material"
+import React, { ReactNode, useEffect, useState } from "react"
+import { PrinterGridModel } from "models"
+import Axios from "axios"
+import { PrinterCard } from "../../components/PrinterCard"
+import { useDrop, DndProvider } from "react-dnd"
+import { HTML5Backend } from "react-dnd-html5-backend"
+import { Dropzone } from "../../components/Dropzone"
 
 const API_URL = process.env.API_URL || "http://localhost:3001";
 
@@ -27,7 +29,7 @@ export default () => {
       <PrinterCard
         key={p.name}
         name={p.name}
-        state={p.state}
+        printerState={p.printerState}
         printProgress={p.printProgress}
         totalTime={p.totalTime}
       />
