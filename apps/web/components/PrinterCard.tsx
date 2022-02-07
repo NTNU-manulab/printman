@@ -97,7 +97,7 @@ export const PrinterCard = (props: PrinterGridModel) => {
 
   const timeFromSeconds = (time: number) => {
     let timeLeft = time
-    console.log(timeLeft)
+    // console.log(timeLeft)
     let D = Math.floor(timeLeft / (24 * 60 * 60))
     let H = Math.floor((timeLeft % (24 * 60 * 60)) / (60 * 60))
     let M = Math.floor((timeLeft % (60 * 60)) / 60)
@@ -113,14 +113,14 @@ export const PrinterCard = (props: PrinterGridModel) => {
   return (
     <Card sx={{ maxWidth: 2 / 9, mt: 2 }}>
       <CardMedia image="prototype3.local.jpeg" component="img" />
-      <Typography>
+      <Typography variant="div">
         <CardContent> {name}</CardContent>
         <CardContent>{state}</CardContent>
 
-        {/* <CardContent>{`Estimated Max time: ` + estimatedTime}</CardContent> */}
-        {/* <CardContent>
+        <CardContent>{`Estimated Max time: ` + estimatedTime}</CardContent>
+        <CardContent>
         {`Estimated Remaining time: ` + remainingSeconds}
-      </CardContent> */}
+      </CardContent>
         <CardContent>
           {remainingTimeObject.days ? remainingTimeObject.days + ` D : ` : ``}
           {remainingTimeObject.hours ? remainingTimeObject.hours + ` H : ` : ``}
