@@ -1,16 +1,10 @@
 import {
-  Controller,
-  Get,
-  HttpCode,
-  Redirect,
-  Res,
-  StreamableFile,
+  Body, Controller,
+  Get, Post, StreamableFile
 } from "@nestjs/common"
-import { get } from "http"
+import { createReadStream } from "fs"
 import { PrinterGridModel } from "models"
 import { PrinterService } from "./printer.service"
-import * as fs from "fs"
-import { createReadStream } from "fs"
 
 @Controller("printer")
 export class PrinterController {
@@ -30,5 +24,10 @@ export class PrinterController {
     let stream = new StreamableFile(file)
     // console.log(stream)
     return stream
+  }
+
+  @Post()
+  postJob(@Body() job): void {
+    console.log(job);
   }
 }

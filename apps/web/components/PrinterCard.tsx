@@ -156,7 +156,7 @@ export const PrinterCard = (props: PrinterGridModel) => {
     >
       <CardMedia src="http://localhost:3001/printer/snapshot" component="img" />
 
-      <Typography>
+      <Typography component={"div"}>
         <CardContent> {name}</CardContent>
         <CardContent>{printerState.text}</CardContent>
         {printerState.flags.printing ? (

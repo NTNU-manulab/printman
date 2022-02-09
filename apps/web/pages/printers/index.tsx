@@ -15,7 +15,7 @@ import React, { useEffect, useState } from "react"
 import { PrinterGrid } from "../../components/PrinterGrid"
 import PrinterStatusBar from "../../components/PrinterStatusBar"
 
-const API_URL = process.env.API_URL || "http://localhost:3001"
+const API_URL = process.env.API_URL || "http://localhost:3001";
 
 export default function index() {
   const [printers, setPrinters] = useState<PrinterGridModel[]>([])
