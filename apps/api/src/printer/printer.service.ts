@@ -1,11 +1,8 @@
-import { Injectable, StreamableFile } from "@nestjs/common"
-import * as fs from "fs"
 import { HttpService } from "@nestjs/axios"
-import { AxiosResponse } from "axios"
+import { Injectable } from "@nestjs/common"
+import * as fs from "fs"
 import { PrinterGridModel } from "models"
 import generateMockPrinter from "src/mock/printerMock"
-import { Observable } from "rxjs"
-import { PrinterModule } from "./printer.module"
 @Injectable()
 export class PrinterService {
   constructor(private httpService: HttpService) {}
