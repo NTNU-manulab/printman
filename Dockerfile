@@ -4,4 +4,4 @@ RUN npm install -g typescript ts-node turbo
 WORKDIR /app
 COPY . .
 RUN chmod +x entry.sh
-ENTRYPOINT [ "sh", "./entry.sh" ]
+ENTRYPOINT [ "turbo", "run", "dev" ]
