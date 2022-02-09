@@ -118,14 +118,6 @@ export const PrinterCard = (props: PrinterGridModel) => {
     setCardColour(findBackgroundColour())
   }, [progress])
 
-  useEffect(() => {
-    ;async () => {
-      let snapshot = (await Axios.get("http://localhost:3001/printer/snapshot"))
-        .data
-      console.log(snapshot)
-    }
-  }, [])
-
   enum Colour {
     error = "#CC7874",
     paused = "#FFEEA1",
@@ -144,8 +136,6 @@ export const PrinterCard = (props: PrinterGridModel) => {
   return (
     <Card
       sx={{
-        // maxWidth: 350,
-        // minWidth: 300,
         bgcolor: cardColour,
         display: "flex",
         flexDirection: "column",
