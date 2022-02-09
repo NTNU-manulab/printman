@@ -1,4 +1,5 @@
 interface PrinterGridModel {
+  uuid: string
   name: string
   printerState: {
     text: string

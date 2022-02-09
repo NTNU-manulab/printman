@@ -1,4 +1,5 @@
 import { PrinterGridModel } from "models"
+import {v4} from 'uuid'
 
 const mocker = require("json-mocker")
 
@@ -61,6 +62,7 @@ const generateMockPrinter = (printerCount: number): PrinterGridModel[] => {
     count: printerCount,
     index: 0,
     template: {
+      uuid: function () {return v4()},
       name: "Printer ",
       printProgress: function () {
         return Math.random() * 100

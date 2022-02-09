@@ -41,7 +41,7 @@ function LinearProgressWithLabel(props: {
 //todo:
 // color card content BG based on status value
 
-export const PrinterCard = (props: PrinterGridModel) => {
+export const PrinterCard = (props: PrinterGridModel, key: string) => {
   const { name, printerState, printProgress, totalTime } = props
   const [progress, setProgress] = useState(printProgress)
   const [estimatedTime, setEstimatedTime] = useState(totalTime)
@@ -63,37 +63,37 @@ export const PrinterCard = (props: PrinterGridModel) => {
   const [cardColour, setCardColour] = useState<Colour>()
 
   // value faker code stolen from https://mui.com/components/progress/#linear-determinate
-  useEffect(() => {
-    if (printerState.flags.printing) {
-      const timer = setInterval(() => {
-        setProgress(oldProgress => {
-          if (oldProgress === 100) {
-            return 0
-          }
+  // useEffect(() => {
+  //   if (printerState.flags.printing) {
+  //     const timer = setInterval(() => {
+  //       setProgress(oldProgress => {
+  //         if (oldProgress === 100) {
+  //           return 0
+  //         }
 
-          const diff = Math.random()
-          return Math.min(oldProgress + diff, 100)
-        })
-      }, 1000)
+  //         const diff = Math.random()
+  //         return Math.min(oldProgress + diff, 100)
+  //       })
+  //     }, 1000)
 
-      return () => {
-        clearInterval(timer)
-      }
-    }
-  }, [])
+  //     return () => {
+  //       clearInterval(timer)
+  //     }
+  //   }
+  // }, [])
 
   // reduce seconds left based on progress
-  useEffect(() => {
-    setRemainingSeconds(() => {
-      let timeDiff = estimatedTime * (progress / 100)
-      return estimatedTime - timeDiff
-    })
-  }, [progress])
+  // useEffect(() => {
+  //   setRemainingSeconds(() => {
+  //     let timeDiff = estimatedTime * (progress / 100)
+  //     return estimatedTime - timeDiff
+  //   })
+  // }, [progress])
 
   // update D:H:M:S object
   useEffect(() => {
     setRemainingTimeObject(timeFromSeconds(remainingSeconds))
-  }, [progress])
+  }, [])
 
   useEffect(() => {
     setEstimatedTimeObject(timeFromSeconds(estimatedTime))
@@ -116,7 +116,7 @@ export const PrinterCard = (props: PrinterGridModel) => {
 
   useEffect(() => {
     setCardColour(findBackgroundColour())
-  }, [progress])
+  }, [])
 
   enum Colour {
     error = "#CC7874",

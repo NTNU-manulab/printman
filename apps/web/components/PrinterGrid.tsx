@@ -13,10 +13,12 @@ export const PrinterGrid = ({
     //todo: elements need keys
     const printerList: ReactNode[] = printers.map((p: PrinterGridModel) => (
       <PrinterCard
+        key={p.uuid}
         name={p.name}
         printerState={p.printerState}
         printProgress={p.printProgress}
         totalTime={p.totalTime}
+        uuid={p.uuid}
       />
     ))
 
