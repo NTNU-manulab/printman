@@ -16,7 +16,7 @@ To get started, follow these steps in order:
 To run the apps in develop mode, run the following command at the root of the project:
 
 ```
-npm run dev
+turbo run dev
 ```
 
 ### Apps and Packages
