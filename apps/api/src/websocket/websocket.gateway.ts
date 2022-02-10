@@ -46,12 +46,15 @@ export class WebsocketGateway {
         this.printersArray
           .filter(p => p.printerState.flags.printing)
           .map(p => {
-            if (p.printProgress === 100) {
-              p.printProgress = 0
-              p.totalTime = 10000 + Math.random() * 50000
+            if (p.progress.completion === 100) {
+              p.progress.completion = 0
+              p.progress.printTimeLeft = p.progress.printTimeTotal
             } else {
-              p.printProgress = Math.min(p.printProgress + Math.random(), 100)
-              p.totalTime = p.totalTime - 1000
+              p.progress.completion = Math.min(
+                p.progress.completion + Math.random(),
+                100,
+              )
+              p.progress.printTimeLeft--
             }
           })
         subscriber.next(this.printersArray)

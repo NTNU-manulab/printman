@@ -5,6 +5,23 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Attach",
+      "port": 9229,
+      "request": "attach",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "type": "pwa-node"
+    },
+
+    {
+      "name": "Attach",
+      "port": 9230,
+      "request": "attach",
+      "skipFiles": ["<node_internals>/**"],
+      "type": "pwa-node"
+    },
+    {
       "type": "pwa-node",
       "request": "launch",
       "name": "Launch Program",
@@ -24,14 +41,15 @@
     },
     {
       "name": "Debug Next",
-      "type": "node",
+      "type": "pwa-node",
       "request": "attach",
       "port": 9230,
       "address": "localhost",
       "localRoot": "${workspaceFolder}",
       "remoteRoot": "/app/",
-      "protocol": "inspector"
+      "protocol": ""
     },
+
     {
       "name": "Launch Node.js in Docker",
       "type": "docker",

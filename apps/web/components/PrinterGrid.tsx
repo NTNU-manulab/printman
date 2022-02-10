@@ -16,8 +16,7 @@ export const PrinterGrid = ({
         key={p.uuid}
         name={p.name}
         printerState={p.printerState}
-        printProgress={p.printProgress}
-        totalTime={p.totalTime}
+        progress={p.progress}
         uuid={p.uuid}
       />
     ))

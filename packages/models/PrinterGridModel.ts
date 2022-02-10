@@ -1,6 +1,12 @@
 interface PrinterGridModel {
   uuid: string
   name: string
+  progress: {
+    completion: number
+    printTime: number
+    printTimeLeft: number
+    printTimeTotal: number
+  }
   printerState: {
     text: string
     flags: {
@@ -13,8 +19,6 @@ interface PrinterGridModel {
       ready: boolean
     }
   }
-  printProgress: number
-  totalTime: number
 }
 
 export default PrinterGridModel

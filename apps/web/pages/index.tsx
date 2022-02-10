@@ -32,14 +32,6 @@ export default function index() {
     paused: 0,
   })
 
-  // useEffect(() => {
-  //   ;(async () => {
-  //     let printers = (await Axios.get(API_URL + "/printer")).data
-  //     // console.log(printers)
-  //     setPrinters(printers)
-  //   })()
-  // }, [])
-
   useEffect(() => {
     socketInit()
   }, [])
@@ -48,31 +40,12 @@ export default function index() {
     const socket = io("http://localhost:3001")
 
     socket.on("connect", function () {
-      // console.log("Connected")
-
-      // socket.emit("events", { test: "test" })
       socket.emit("printers", { test: "test" })
-
-      // socket.emit("identity", 0, (response: any) =>
-      //   console.log("Identity:", response),
-      // )
     })
-
-    // socket.on("events", function (data) {
-    //   console.log("event", data)
-    // })
 
     socket.on("printers", function (data) {
       setPrinters(data)
     })
-
-    // socket.on("exception", function (data) {
-    //   console.log("event", data)
-    // })
-
-    // socket.on("disconnect", function () {
-    //   console.log("Disconnected")
-    // })
 
     return null
   }
