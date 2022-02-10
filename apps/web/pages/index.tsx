@@ -78,15 +78,6 @@ export default function index() {
 
   const theme = createTheme()
 
-  // const PrinterContainer = styled(Container)(({ theme }) => ({
-  //   display: "grid",
-  //   rowGap: theme.spacing(2),
-  //   columnGap: theme.spacing(2),
-  //   margin: "auto",
-  //   paddingLeft: { xs: 0, md: 0 },
-  //   paddingRight: 0,
-  // }))
-
   return (
     <>
       <AppBar position="sticky" sx={{ mb: theme.spacing(2) }}>

@@ -35,3 +35,4 @@ yarn-error.log*
 # turbo
 .turbo
 apps/api/snapshot.jpg
+apps/wstest/index.html
