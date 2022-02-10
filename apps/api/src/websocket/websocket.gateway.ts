@@ -51,10 +51,14 @@ export class WebsocketGateway {
               p.progress.printTimeLeft = p.progress.printTimeTotal
             } else {
               p.progress.completion = Math.min(
-                p.progress.completion + Math.random(),
+                p.progress.completion + Math.random() * 0.5,
                 100,
               )
-              p.progress.printTimeLeft--
+              p.progress.printTime =
+                p.progress.printTimeTotal * (p.progress.completion / 100)
+
+              p.progress.printTimeLeft =
+                p.progress.printTimeTotal - p.progress.printTime
             }
           })
         subscriber.next(this.printersArray)
