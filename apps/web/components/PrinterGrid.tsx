@@ -1,3 +1,4 @@
+import { ReactJSXElement } from "@emotion/react/types/jsx-namespace"
 import { Box, styled } from "@mui/material"
 import { PrinterGridModel } from "models"
 import React from "react"
@@ -8,15 +9,15 @@ export const PrinterGrid = ({
   printers,
 }: {
   printers: PrinterGridModel[]
-}): JSX.Element => {
+}): ReactJSXElement => {
   const PrinterList = (): JSX.Element => {
-    //todo: elements need keys
     const printerList: ReactNode[] = printers.map((p: PrinterGridModel) => (
       <PrinterCard
+        key={p.uuid}
         name={p.name}
         printerState={p.printerState}
-        printProgress={p.printProgress}
-        totalTime={p.totalTime}
+        progress={p.progress}
+        uuid={p.uuid}
       />
     ))
 

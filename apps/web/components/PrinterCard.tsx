@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from "react"
+import { ReactJSXElement } from "@emotion/react/types/jsx-namespace"
 import {
   Box,
   Card,
   CardContent,
   CardMedia,
   LinearProgress,
-  Typography,
+  Typography
 } from "@mui/material"
 import { PrinterGridModel } from "models"
-import Axios from "axios"
+import React from "react"
 
 function LinearProgressWithLabel(props: {
   value: number
   variant: "determinate" | "indeterminate" | "buffer" | "query" | undefined
-}) {
+}): ReactJSXElement {
   return (
     <Box
       sx={{
@@ -38,70 +38,11 @@ function LinearProgressWithLabel(props: {
   )
 }
 
-//todo:
-// color card content BG based on status value
-
-export const PrinterCard = (props: PrinterGridModel) => {
-  const { name, printerState, printProgress, totalTime } = props
-  const [progress, setProgress] = useState(printProgress)
-  const [estimatedTime, setEstimatedTime] = useState(totalTime)
-  const [estimatedTimeObject, setEstimatedTimeObject] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-  })
-
-  const [remainingSeconds, setRemainingSeconds] = useState(totalTime)
-  const [remainingTimeObject, setRemainingTimeObject] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-  })
-
-  const [cardColour, setCardColour] = useState<Colour>()
-
-  // value faker code stolen from https://mui.com/components/progress/#linear-determinate
-  useEffect(() => {
-    if (printerState.flags.printing) {
-      const timer = setInterval(() => {
-        setProgress(oldProgress => {
-          if (oldProgress === 100) {
-            return 0
-          }
-
-          const diff = Math.random()
-          return Math.min(oldProgress + diff, 100)
-        })
-      }, 1000)
-
-      return () => {
-        clearInterval(timer)
-      }
-    }
-  }, [])
-
-  // reduce seconds left based on progress
-  useEffect(() => {
-    setRemainingSeconds(() => {
-      let timeDiff = estimatedTime * (progress / 100)
-      return estimatedTime - timeDiff
-    })
-  }, [progress])
-
-  // update D:H:M:S object
-  useEffect(() => {
-    setRemainingTimeObject(timeFromSeconds(remainingSeconds))
-  }, [progress])
-
-  useEffect(() => {
-    setEstimatedTimeObject(timeFromSeconds(estimatedTime))
-  }, [])
+export const PrinterCard = (props: PrinterGridModel, key: string) => {
+  const { name, printerState, progress } = props
 
   const timeFromSeconds = (time: number) => {
     let timeLeft = time
-    // console.log(timeLeft)
     let D = Math.floor(timeLeft / (24 * 60 * 60))
     let H = Math.floor((timeLeft % (24 * 60 * 60)) / (60 * 60))
     let M = Math.floor((timeLeft % (60 * 60)) / 60)
@@ -114,10 +55,6 @@ export const PrinterCard = (props: PrinterGridModel) => {
     }
   }
 
-  useEffect(() => {
-    setCardColour(findBackgroundColour())
-  }, [progress])
-
   enum Colour {
     error = "#CC7874",
     paused = "#FFEEA1",
@@ -125,7 +62,6 @@ export const PrinterCard = (props: PrinterGridModel) => {
     printing = "#FFFFFF",
   }
 
-  //todo: set this as a state object instead of fucking about with sx?
   const findBackgroundColour = (): Colour | undefined => {
     let color = Object.entries(printerState.flags)
       .filter(([k, v]) => v === true && k !== "operational")
@@ -133,10 +69,54 @@ export const PrinterCard = (props: PrinterGridModel) => {
     return color
   }
 
+  const PrinterTime = () => {
+    const estimatedTimeObject = timeFromSeconds(progress.printTimeTotal)
+    const remainingTimeObject = timeFromSeconds(progress.printTimeLeft)
+
+    return (
+      <>
+        {!printerState.flags.ready ? (
+          <CardContent
+            sx={{
+              display: "inline-grid",
+              gridTemplateColumns: "repeat(3, 1fr)",
+              columnGap: "3",
+            }}
+          >
+            <Typography align="left">
+              {remainingTimeObject.days ? remainingTimeObject.days + `D:` : ``}
+              {remainingTimeObject.hours
+                ? remainingTimeObject.hours + `H:`
+                : ``}
+              {remainingTimeObject.minutes
+                ? remainingTimeObject.minutes + `M:`
+                : ``}
+              {remainingTimeObject.seconds + `S`}
+            </Typography>
+            <Box sx={{ minWidth: "auto" }} />
+            <Typography align="right">
+              {" "}
+              {estimatedTimeObject.days ? estimatedTimeObject.days + `D:` : ``}
+              {estimatedTimeObject.hours
+                ? estimatedTimeObject.hours + `H:`
+                : ``}
+              {estimatedTimeObject.minutes
+                ? estimatedTimeObject.minutes + `M:`
+                : ``}
+              {estimatedTimeObject.seconds + `S`}
+            </Typography>
+          </CardContent>
+        ) : (
+          <CardContent />
+        )}
+      </>
+    )
+  }
+
   return (
     <Card
       sx={{
-        bgcolor: cardColour,
+        bgcolor: findBackgroundColour(),
         display: "flex",
         flexDirection: "column",
         "& .MuiCardContent-root:last-child": {
@@ -149,28 +129,7 @@ export const PrinterCard = (props: PrinterGridModel) => {
       <Typography component={"div"}>
         <CardContent> {name}</CardContent>
         <CardContent>{printerState.text}</CardContent>
-        {printerState.flags.printing ? (
-          <CardContent>
-            {remainingTimeObject.days ? remainingTimeObject.days + ` D : ` : ``}
-            {remainingTimeObject.hours
-              ? remainingTimeObject.hours + ` H : `
-              : ``}
-            {remainingTimeObject.minutes
-              ? remainingTimeObject.minutes + ` M : `
-              : ``}
-            {remainingTimeObject.seconds + ` S`} /{" "}
-            {estimatedTimeObject.days ? estimatedTimeObject.days + ` D : ` : ``}
-            {estimatedTimeObject.hours
-              ? estimatedTimeObject.hours + ` H : `
-              : ``}
-            {estimatedTimeObject.minutes
-              ? estimatedTimeObject.minutes + ` M : `
-              : ``}
-            {estimatedTimeObject.seconds + ` S`}
-          </CardContent>
-        ) : (
-          <CardContent />
-        )}
+        {PrinterTime()}
       </Typography>
       <CardContent
         sx={{
@@ -184,7 +143,7 @@ export const PrinterCard = (props: PrinterGridModel) => {
       >
         <LinearProgressWithLabel
           variant="determinate"
-          value={printerState.flags.ready ? 0 : progress}
+          value={printerState.flags.ready ? 0 : progress.completion}
         />
       </CardContent>
     </Card>

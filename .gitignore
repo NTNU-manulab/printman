@@ -39,3 +39,4 @@ yarn-error.log*
 ./apps/shepherd
 
 apps/api/snapshot.jpg
+apps/wstest/index.html

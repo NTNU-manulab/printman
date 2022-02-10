@@ -3,7 +3,7 @@
   "verison": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "NODE_OPTIONS='--inspect=localhost:9230' next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
