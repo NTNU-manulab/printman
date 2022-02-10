@@ -37,3 +37,5 @@ yarn-error.log*
 
 # kafka / shepherd
 ./apps/shepherd
+
+apps/api/snapshot.jpg

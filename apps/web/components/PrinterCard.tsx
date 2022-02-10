@@ -8,6 +8,7 @@ import {
   Typography,
 } from "@mui/material"
 import { PrinterGridModel } from "models"
+import Axios from "axios"
 
 function LinearProgressWithLabel(props: {
   value: number
@@ -135,8 +136,6 @@ export const PrinterCard = (props: PrinterGridModel) => {
   return (
     <Card
       sx={{
-        // maxWidth: 350,
-        // minWidth: 300,
         bgcolor: cardColour,
         display: "flex",
         flexDirection: "column",
@@ -145,7 +144,8 @@ export const PrinterCard = (props: PrinterGridModel) => {
         },
       }}
     >
-      <CardMedia image="prototype3.local.jpeg" component="img" />
+      <CardMedia src="http://localhost:3001/printer/snapshot" component="img" />
+
       <Typography component={"div"}>
         <CardContent> {name}</CardContent>
         <CardContent>{printerState.text}</CardContent>
