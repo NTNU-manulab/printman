@@ -1,3 +1,4 @@
+import { Player } from "@lottiefiles/react-lottie-player"
 import {
   Backdrop,
   Grid,
@@ -14,11 +15,13 @@ import {
   DialogActions,
   Button,
   Slide,
+  Box,
 } from "@mui/material"
 import { TransitionProps } from "@mui/material/transitions"
 import axios from "axios"
 import React, { FC, useCallback, useEffect, useRef, useState } from "react"
 import { FileDrop } from "react-file-drop"
+import { domainToUnicode } from "url"
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -78,7 +81,10 @@ export const Dropzone: FC<React.ReactFragment> = () => {
 
   const onFileInputChange = () => {}
 
-  const onTargetClick = () => {}
+  const onTargetClick = () => {
+    /**@type HTMLInputElement */
+    document.querySelector<HTMLInputElement>("input[type=file]")?.click()
+  }
 
   const onFrameDragEnter = () => {
     console.log("iFFWEUI")
@@ -90,11 +96,24 @@ export const Dropzone: FC<React.ReactFragment> = () => {
         onTargetClick={onTargetClick}
         onDrop={onDrop}
       >
+        <Box sx={{cursor: "pointer", display: "flex", justifyContent: "center", alignItems: "center", height: 200, border: "dashed #ddd 8px", borderRadius: 5}}>
+        <Box sx={{display: "flex", flexDirection: "column", alignItems: "center", gap: 2}}>
+          <Typography sx={{color: "#999", fontFamily: "Verdana"}}>Drag and drop your 3D model files here</Typography>
+          <Typography sx={{color: "#999", fontFamily: "Verdana", fontSize: 10}}>Or click this box. Whichever you prefer</Typography>
+        </Box>
+        <Player
+  speed={0.15}
+  autoplay
+  loop
+  src="https://assets9.lottiefiles.com/packages/lf20_vu2p4il8.json"
+  style={{ height: '200px', opacity: 0.4 }}
+></Player>
+        </Box>
         <input
           onChange={onFileInputChange}
           ref={dropTargetRef}
           type="file"
-          className="hidden"
+          hidden
         />
       </FileDrop>
       <Dialog fullScreen TransitionComponent={Transition} open={open}>
