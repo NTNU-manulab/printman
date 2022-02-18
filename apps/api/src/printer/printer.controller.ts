@@ -1,10 +1,17 @@
 import {
-  Body, Controller,
-  Get, Post, StreamableFile
+  Controller,
+  Get,
+  Post,
+  StreamableFile,
+  UploadedFiles,
+  UseInterceptors,
 } from "@nestjs/common"
-import { createReadStream } from "fs"
+import { AnyFilesInterceptor } from "@nestjs/platform-express"
+import { createReadStream, fstat } from "fs"
 import { PrinterGridModel } from "models"
 import { PrinterService } from "./printer.service"
+import * as fs from "fs"
+import * as fsA from "fs/promises"
 
 @Controller("printer")
 export class PrinterController {
@@ -26,8 +33,11 @@ export class PrinterController {
     return stream
   }
 
-  @Post()
-  postJob(@Body() job): void {
-    console.log(job);
+  @Post("uploadFile")
+  @UseInterceptors(AnyFilesInterceptor())
+  uploadFile(@UploadedFiles() files: Array<Express.Multer.File>) {
+    files.forEach(f => {
+      fsA.writeFile(`./${f.originalname}-${Date.now()}`, f.buffer.toString())
+    })
   }
 }
