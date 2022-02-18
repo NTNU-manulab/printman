@@ -1,7 +1,9 @@
 services:
   manu_dev:
-    container_name: manu_dev
-    image: manu_dev:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    image: manu_dev
     volumes:
       - type: bind
         source: .
@@ -11,5 +13,9 @@ services:
       - "3001:3001"
       - "9229:9229"
       - "9230:9230"
-  nginx:
-    image: nginx
+  # nginx:
+  #   build:
+  #     context: ./proxy
+  #     dockerfile: Dockerfile.nginx
+  #   ports:
+  #     - "3002:80"

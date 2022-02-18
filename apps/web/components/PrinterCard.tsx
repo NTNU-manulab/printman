@@ -5,7 +5,7 @@ import {
   CardContent,
   CardMedia,
   LinearProgress,
-  Typography
+  Typography,
 } from "@mui/material"
 import { PrinterGridModel } from "models"
 import React from "react"

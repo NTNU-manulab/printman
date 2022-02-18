@@ -21,21 +21,21 @@ export class PrinterService {
   }
 
   async getPrinterSnapshot(): Promise<string | Buffer> {
-    const writer: fs.WriteStream = fs.createWriteStream("./snapshot.jpg")
+    // const writer: fs.WriteStream = fs.createWriteStream("./snapshot.jpg")
 
-    const response = await this.httpService.axiosRef({
-      url: "http://192.168.1.62/webcam/?action=snapshot",
-      method: "GET",
-      responseType: "stream",
-      headers: { "x-api-key": "8BDEEEFF95F346C2AA26B39E03EDE513" },
-    })
+    // const response = await this.httpService.axiosRef({
+    //   url: "http://192.168.1.62/webcam/?action=snapshot",
+    //   method: "GET",
+    //   responseType: "stream",
+    //   headers: { "x-api-key": "6C2AA26B39E03EDE5138BDEEEFF95F34" },
+    // })
 
-    response.data.pipe(writer)
+    // response.data.pipe(writer)
 
-    return new Promise<string | Buffer>((res, rej) => {
-      writer.on("finish", res)
-      writer.on("error", rej)
-    }).then(() => writer.path)
-
+    // return new Promise<string | Buffer>((res, rej) => {
+    //   writer.on("finish", res)
+    //   writer.on("error", rej)
+    // }).then(() => writer.path)
+    return "./snapshot.png"
   }
 }
