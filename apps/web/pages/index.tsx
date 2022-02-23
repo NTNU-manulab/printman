@@ -16,6 +16,7 @@ import { PrinterGrid } from "../components/PrinterGrid"
 import PrinterStatusBar from "../components/PrinterStatusBar"
 import io from "socket.io-client"
 import { Dropzone } from "../components/Dropzone"
+import PrinterColorFilter from "../components/PrinterColorFilter"
 
 const API_URL = process.env.API_URL || "http://localhost:3001"
 
@@ -129,7 +130,10 @@ export default function index() {
         }}
       >
         <Dropzone></Dropzone>
-        <PrinterStatusBar printerStates={printerStates} />
+        <Box>
+          <PrinterStatusBar printerStates={printerStates} />
+          <PrinterColorFilter/>
+        </Box>
         <PrinterGrid printers={printers} />
       </Container>
     </>
