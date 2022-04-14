@@ -21,4 +21,4 @@ COPY --from=installer /app/ .
 COPY --from=builder /app/out/full/ .
 COPY .gitignore .gitignore
 RUN yarn turbo run build --scope=web --include-dependencies --no-deps
-RUN yarn turbo run start
+ENTRYPOINT yarn turbo run start
