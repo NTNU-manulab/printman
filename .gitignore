@@ -34,3 +34,9 @@ yarn-error.log*
 
 # turbo
 .turbo
+
+# kafka / shepherd
+./apps/shepherd
+
+apps/api/snapshot.jpg
+apps/wstest/index.html

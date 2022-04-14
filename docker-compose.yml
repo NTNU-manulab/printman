@@ -1,9 +1,9 @@
 services:
   manu_dev:
-    container_name: manu_dev
-    environment:
-      - NODE_OPTIONS='--inspect'
-    image: manu_dev:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    image: manu_dev
     volumes:
       - type: bind
         source: .
@@ -12,3 +12,10 @@ services:
       - "3000:3000"
       - "3001:3001"
       - "9229:9229"
+      - "9230:9230"
+  # nginx:
+  #   build:
+  #     context: ./proxy
+  #     dockerfile: Dockerfile.nginx
+  #   ports:
+  #     - "3002:80"
