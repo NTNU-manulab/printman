@@ -1,20 +1,20 @@
 // a[
 //   {
 //     current: {
-namespace printer {
-  interface response {
+export namespace Printer {
+  export interface Response {
     currentZ?: number
-    state: state
-    job: job
-    progress: progress
-    resends: resends
+    state: State
+    job: Job
+    progress: Progress
+    resends: Resends
     serverTime: number
-    temps: temperature[]
+    temps: Temperature[]
     logs: string[]
     messages: string[]
     busyfiles: string[]
   } 
-  interface state {
+  interface State {
     text: string
     error: string
     flags: {
@@ -32,7 +32,7 @@ namespace printer {
     }
   }
 
-  interface job {
+  interface Job {
     file: {
       name: string
       path: string
@@ -52,20 +52,20 @@ namespace printer {
     }
     user: string
   }
-  interface progress {
+  interface Progress {
     completion?: string
     filepos?: string
     printTime?: string
     printTimeLeft?: string
     printTimeLeftOrigin?: string
   }
-  interface offsets {}
-  interface resends {
+  interface Offsets {}
+  interface Resends {
     count: number
     transmitted: number
     ratio: number
   }
-  interface temperature {
+  interface Temperature {
     time: number
     tool0: { actual: number; target: number }
     bed: { actual: number; target: number }
@@ -74,7 +74,6 @@ namespace printer {
 }
 
 [{
-  current: {
     currentZ: null,
     state: {
       text: "Operational",
@@ -134,5 +133,71 @@ namespace printer {
     ],
     messages: ["T:22.8 /0.0 B:23.5 /0.0 T0:22.8 /0.0 @:0 B@:0 P:22.9 A:31.0"],
     busyFiles: [],
+}];
+
+[
+  {
+    currentZ: 0,
+    state: {
+      text: "Printing",
+      error: "No error",
+      flags: {
+        operational: true,
+        printing: true,
+        cancelling: false,
+        pausing: false,
+        resuming: false,
+        finishing: false,
+        closedOrError: false,
+        error: false,
+        paused: false,
+        ready: false,
+        sdReady: false,
+      },
+    },
+    job: {
+      file: {
+        name: "some_print.stl",
+        path: "path",
+        display: "display",
+        origin: "origin",
+        size: 14271234,
+        date: 98412372813,
+      },
+      estimatedPrintTime: 61274612847,
+      averagePrintTime: 128372,
+      lastPrintTime: 12476273,
+      filament: {
+        tool0: {
+          length: 184172487,
+          volume: 2183,
+        }
+      },
+      user: "simenwii@stud.ntnu.no"
+    },
+    progress: {
+      completion: "completion",
+      filepos: "filepos",
+      printTime: "printTime",
+      printTimeLeft: "printTimeLeft",
+      printTimeLeftOrigin: "printTimeLeftOrigin",
+    },
+    resends: {
+      count: 1,
+      transmitted: 3,
+      ratio: 44,
+    },
+    serverTime: 12487,
+    temps: [
+      {
+        time: 12381274,
+        tool0: { actual: 200, target: 230 },
+        bed: { actual: 44, target: 69 },
+        chamber: { actual: 123, target: 150 },
+      }
+    ],
+    logs: ["log1", "log2", "log3"],
+    messages: ["message1", "message2", "message3"],
+    busyfiles: ["busyfile1", "busyfile2"],
   }
-}]
+]

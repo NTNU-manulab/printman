@@ -1,3 +1,4 @@
 import PrinterGridModel from "./PrinterGridModel"
+import { Printer } from "./PrinterState"
 
-export type { PrinterGridModel }
+export type { PrinterGridModel, Printer }
