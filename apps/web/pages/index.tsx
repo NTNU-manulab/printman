@@ -1,13 +1,8 @@
 import {
-  AppBar,
   Box,
-  Button,
   Container,
   createTheme,
   styled,
-  ThemeProvider,
-  Toolbar,
-  Typography,
 } from "@mui/material"
 import Axios from "axios"
 import { PrinterGridModel } from "models"
@@ -20,7 +15,8 @@ import PrinterColorFilter from "../components/PrinterColorFilter"
 
 const API_URL = process.env.API_URL || "http://localhost:3001"
 
-export default function index() {
+
+export default function Index() {
   const [printers, setPrinters] = useState<PrinterGridModel[]>([])
   const [printerStates, setPrinterStates] = useState<{
     ready: number
@@ -82,41 +78,7 @@ export default function index() {
 
   return (
     <>
-      <AppBar position="sticky" sx={{ mb: theme.spacing(2) }}>
-        <Toolbar>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
-          >
-            MANULAB PRINTFARM
-          </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            <Button
-              key={1}
-              onClick={() => {}}
-              sx={{ my: 2, color: "white", display: "block" }}
-            >
-              PRINTERS
-            </Button>
-            <Button
-              key={2}
-              onClick={() => {}}
-              sx={{ my: 2, color: "white", display: "block" }}
-            >
-              ADMIN
-            </Button>
-            <Button
-              key={3}
-              onClick={() => {}}
-              sx={{ my: 2, color: "white", display: "block" }}
-            >
-              ABOUT
-            </Button>
-          </Box>
-        </Toolbar>
-      </AppBar>
+      {/* <ManulabAppBar /> */}
       <Container
         fixed
         sx={{
@@ -132,7 +94,7 @@ export default function index() {
         <Dropzone></Dropzone>
         <Box>
           <PrinterStatusBar printerStates={printerStates} />
-          <PrinterColorFilter/>
+          <PrinterColorFilter />
         </Box>
         <PrinterGrid printers={printers} />
       </Container>
