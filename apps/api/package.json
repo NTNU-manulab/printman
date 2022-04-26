@@ -23,7 +23,8 @@
   "dependencies": {
     "@nestjs/microservices": "^8.4.0",
     "@nestjs/platform-express": "^8.0.0",
-    "rimraf": "^3.0.2"
+    "rimraf": "^3.0.2",
+    "models": "*"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",

@@ -3,7 +3,7 @@
   "title": "Building docker image",
   "steps": [
     {
-      "file": "Dockerfile",
+      "file": "Dockerfile.web",
       "description": "This dockerfile uses multi-stage builds.\nhttps://docs.docker.com/develop/develop-images/multistage-build/\n\nFor running the nextjs website for example, we don't really need the source files. All we need is to do `next build` and use that build artifact to serve our site. However, when we only use a single docker container, we need to import all the source files, build it, then run the program, all in the same container. This leaves us with a container that's potentially tens of megabytes larger than it really needs to be.\n\nBy doing multistage builds, we can use one container for building the source files, then we copy the built files into a separate container and throw the old one in the trash. Now all the new container contains is the build files, and the container is much smaller in size.",
       "line": 7,
       "selection": {
@@ -18,8 +18,8 @@
       }
     },
     {
-      "file": "Dockerfile",
-      "description": "To build the image:\n```bash\ndocker build -t revosw/manulab-frontend:latest .\n```",
+      "file": "Dockerfile.web",
+      "description": "To build the api image:\n```bash\ndocker buildx build --platform linux/arm64 -f Dockerfile.api -t revosw/manulab-api:arm64 --push .\n```\n\nTo build the web image\n```bash\ndocker buildx build --platform linux/arm64 -f Dockerfile.web -t revosw/printman-web:arm64 --push .\n```",
       "line": 23,
       "selection": {
         "start": {

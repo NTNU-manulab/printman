@@ -10,7 +10,9 @@
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "dockerpush:api": "docker buildx build --platform linux/arm64,linux/amd64 -f Dockerfile.api -t revosw/printman-api:latest --push .",
+    "dockerpush:web": "docker buildx build --platform linux/arm64,linux/amd64 -f Dockerfile.web -t revosw/printman-web:latest --push ."
   },
   "devDependencies": {
     "@types/uuid": "^8.3.4",
