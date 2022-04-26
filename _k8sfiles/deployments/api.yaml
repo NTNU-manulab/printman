@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: printman-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: printman-api
+  template:
+    metadata:
+      labels:
+        app: printman-api
+    spec:
+      containers:
+      - name: printman-api
+        
+        image: revosw/printman-api:latest
+        resources:
+          limits:
+            memory: "1024Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 3001
+        # stdin: true
+        # envFrom:
+        #   - configMapRef:
+        #       name: api-config

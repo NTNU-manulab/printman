@@ -13,7 +13,7 @@ import io from "socket.io-client"
 import { Dropzone } from "../components/Dropzone"
 import PrinterColorFilter from "../components/PrinterColorFilter"
 
-const API_URL = process.env.API_URL || "http://localhost:3001"
+const API_URL = process.env.API_URL || "http://api.manulab.net"
 
 
 export default function Index() {
@@ -35,7 +35,7 @@ export default function Index() {
   }, [])
 
   const socketInit = async () => {
-    const socket = io("http://localhost:3001")
+    const socket = io("manulab.net")
 
     socket.on("connect", function () {
       socket.emit("printers", { test: "test" })

@@ -1,0 +1,10 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: mosquittoingressroute
+spec:
+  routes:
+    - match: HostSNI("*")
+      services:
+        - name: mosquitto
+          port: 1883

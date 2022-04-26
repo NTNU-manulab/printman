@@ -53,7 +53,7 @@ export const Dropzone: FC<React.ReactFragment> = () => {
     })
 
     axios
-      .post("http://localhost:3001/printer/uploadFile", formData, {
+      .post("http://api.manulab.net/printer/uploadFile", formData, {
         headers: {
           "Content-type": "multipart/form-data",
         },

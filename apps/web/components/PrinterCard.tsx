@@ -124,7 +124,7 @@ export const PrinterCard = (props: PrinterGridModel, key: string) => {
         },
       }}
     >
-      <CardMedia src="http://localhost:3001/printer/snapshot" component="img" />
+      <CardMedia src="http://api.manulab.net/printer/snapshot" component="img" />
 
       <Typography component={"div"}>
         <CardContent> {name}</CardContent>

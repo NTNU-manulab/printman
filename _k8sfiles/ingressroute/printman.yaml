@@ -1,0 +1,26 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: printman-ingress
+spec:
+  entryPoints:
+    - web
+  routes:
+    - kind: Rule
+      match: Host(`manulab.net`)
+      services:
+        - name: printman-web
+          port: 80
+          scheme: http
+    - kind: Rule
+      match: Host(`manulab.net`) && PathPrefix(`/socket.io`)
+      services:
+        - name: printman-api
+          port: 80
+          scheme: http
+    - kind: Rule
+      match: Host(`api.manulab.net`)
+      services:
+        - name: printman-api
+          port: 80
+          scheme: http

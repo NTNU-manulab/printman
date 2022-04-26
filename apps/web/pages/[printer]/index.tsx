@@ -44,7 +44,7 @@ const Printer = () => {
   }, [])
 
   const socketInit = async () => {
-    const socket = io("http://localhost:3001")
+    const socket = io("manulab.net")
 
     socket.on("connect", function () {
       socket.emit("events", { test: "test" })
@@ -82,7 +82,7 @@ const Printer = () => {
               </Grid>
             </Grid>
             <Grid item>
-              <img src="http://localhost:3001/printer/snapshot" />
+              <img src="http://api.manulab.net/printer/snapshot" />
             </Grid>
           </Grid>
           <Grid item>
