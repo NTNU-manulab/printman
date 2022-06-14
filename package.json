@@ -13,31 +13,29 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
+    "@nestjs/testing": "^8.4.6",
     "@types/uuid": "^8.3.4",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint": "^8.13.0",
-    "prettier": "^2.5.1",
-    "turbo": "^1.2.1",
-    "yarn": "^1.22.11"
+    "eslint": "^8.16.0",
+    "eslint-config-prettier": "^8.5.0",
+    "prettier": "^2.6.2",
+    "turbo": "^1.2.14",
+    "yarn": "^1.22.18"
   },
   "engines": {
     "npm": ">=8.0.0",
-    "node": ">=17.0.0 <18"
+    "node": ">=17.0.0"
   },
   "packageManager": "yarn@1.22.11",
   "dependencies": {
-    "@nestjs/common": "^8.0.0",
-    "@nestjs/core": "^8.0.0",
-    "rxjs": "^7.2.0",
-    "reflect-metadata": "^0.1.13",
-    "@nestjs/axios": "^0.0.7",
-    "@nestjs/platform-socket.io": "^8.4.4",
-    "@nestjs/websockets": "^8.4.4",
-    "@types/multer": "^1.4.7",
-    "axios": "^0.26.1",
-    "dotenv": "^16.0.0",
+    "@nestjs/core": "^8.4.5",
+    "axios": "^0.27.2",
+    "dotenv": "^16.0.1",
     "json-mocker": "^1.2.2",
     "mqtt": "^4.3.7",
+    "multer": "^1.4.4",
+    "nestjs": "^0.0.1",
+    "next": "^12.1.6",
+    "reflect-metadata": "^0.1.13",
     "uuid": "^8.3.2"
   }
 }

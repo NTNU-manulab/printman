@@ -4,6 +4,7 @@ import { v4 } from "uuid"
 const mocker = require("json-mocker")
 
 const generateMockPrinter = (printerCount: number): PrinterGridModel[] => {
+  // printerState
   mocker.provider.add({
     type: "printerState",
     data: [
@@ -57,7 +58,7 @@ const generateMockPrinter = (printerCount: number): PrinterGridModel[] => {
       },
     ],
   })
-
+  // progress
   mocker.provider.add({
     type: "progress",
     data: [
@@ -77,6 +78,18 @@ const generateMockPrinter = (printerCount: number): PrinterGridModel[] => {
     ],
   })
 
+  mocker.provider.add({
+    type: "name",
+    dat: [
+      function () {
+        return {
+          name: "printer"+"index()"
+        }
+      }
+    ]
+  })
+
+  // build printer mocks
   let mockPrinters = mocker.build({
     count: printerCount,
     index: 0,
@@ -84,7 +97,7 @@ const generateMockPrinter = (printerCount: number): PrinterGridModel[] => {
       uuid: function () {
         return v4()
       },
-      name: "Printer ",
+      name: "Printer " + "index()",
       progress: function () {
         const progress = Math.random() * 100
         const totalTime = 10000 + Math.random() * 50000

@@ -77,6 +77,7 @@ export const Dropzone: FC<React.ReactFragment> = () => {
 
     handleToggle()
     setFiles([...files])
+    sendFile
   }
 
   const onFileInputChange = () => {}
@@ -116,7 +117,7 @@ export const Dropzone: FC<React.ReactFragment> = () => {
           hidden
         />
       </FileDrop>
-      <Dialog fullScreen TransitionComponent={Transition} open={open}>
+      <Dialog fullWidth TransitionComponent={Transition} open={open}>
         <DialogTitle>Configure print jobs</DialogTitle>
         <DialogContent>
           <Grid container spacing={2}>

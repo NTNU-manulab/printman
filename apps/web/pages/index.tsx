@@ -1,3 +1,4 @@
+// import 'dotenv/config'
 import {
   Box,
   Container,
@@ -13,8 +14,9 @@ import io from "socket.io-client"
 import { Dropzone } from "../components/Dropzone"
 import PrinterColorFilter from "../components/PrinterColorFilter"
 
-const API_URL = process.env.API_URL || "http://localhost:3001"
 
+const API_URL = process.env.REACT_APP_PRINTER00
+const WS_URL = "http://localhost:3001"
 
 export default function Index() {
   const [printers, setPrinters] = useState<PrinterGridModel[]>([])
@@ -35,6 +37,7 @@ export default function Index() {
   }, [])
 
   const socketInit = async () => {
+    console.log(process.env.REACT_APP_API_URL)
     const socket = io("http://localhost:3001")
 
     socket.on("connect", function () {
