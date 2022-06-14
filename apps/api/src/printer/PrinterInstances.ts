@@ -5,12 +5,39 @@ const PrinterInstances: PrinterInstance[] = [
     {
         uuid: v4(),
         name: "printer00",
-        ip: "192.168.1.30",
-        port: "5001",
+        ip: "192.168.1.20",
+        port: "8080",
         appid: "printman",
-        key: "B0DC27D2A9674CBF95A26484687940F4",
-        virtual: false
-    },    
+        key: "F5165607E2F34353BDB703B03055E6B0",
+        virtual: true
+    },
+    {
+        uuid: v4(),
+        name: "printer01",
+        ip: "192.168.1.20",
+        port: "8081",
+        appid: "printman",
+        key: "F5165607E2F34353BDB703B03055E6B0",
+        virtual: true
+    }, 
+    {
+        uuid: v4(),
+        name: "printer02",
+        ip: "192.168.1.20",
+        port: "8082",
+        appid: "printman",
+        key: "F5165607E2F34353BDB703B03055E6B0",
+        virtual: true
+    }, 
+    {
+        uuid: v4(),
+        name: "printer03",
+        ip: "192.168.1.20",
+        port: "8083",
+        appid: "printman",
+        key: "F5165607E2F34353BDB703B03055E6B0",
+        virtual: true
+    },     
     {
         uuid: v4(),
         name: "printerD1",
