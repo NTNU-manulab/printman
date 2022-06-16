@@ -22,6 +22,8 @@ import axios from "axios"
 import React, { FC, useCallback, useEffect, useRef, useState } from "react"
 import { FileDrop } from "react-file-drop"
 import { domainToUnicode } from "url"
+import { API_URL } from "../pages"
+import { printerGraphic } from "./printer-graphic"
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -53,7 +55,7 @@ export const Dropzone: FC<React.ReactFragment> = () => {
     })
 
     axios
-      .post("http://localhost:3001/printer/uploadFile", formData, {
+      .post(API_URL + "/printer/uploadFile", formData, {
         headers: {
           "Content-type": "multipart/form-data",
         },
@@ -106,7 +108,8 @@ export const Dropzone: FC<React.ReactFragment> = () => {
   speed={0.15}
   autoplay
   loop
-  src="https://assets9.lottiefiles.com/packages/lf20_vu2p4il8.json"
+  src={API_URL + "/dropanim"}
+  // src="https://assets9.lottiefiles.com/packages/lf20_vu2p4il8.json"
   style={{ height: '200px', opacity: 0.4 }}
 ></Player>
         </Box>

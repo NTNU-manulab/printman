@@ -66,4 +66,6 @@ export class PrinterService {
     // }).then(() => writer.path)
     return "./snapshot.png"
   }
+
+
 }

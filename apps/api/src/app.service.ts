@@ -6,4 +6,11 @@ export class AppService {
   getHello(): string {
     return "Fuck the World!"
   }
+
+  async getFileDropGraphic(): Promise<string | Buffer> {
+    return "printer-graphic.json"
+  }
+
 }
+
+
