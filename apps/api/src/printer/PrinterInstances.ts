@@ -9,7 +9,8 @@ const PrinterInstances: PrinterInstance[] = [
         port: "8080",
         appid: "printman",
         key: "F5165607E2F34353BDB703B03055E6B0",
-        virtual: true
+        virtual: true,
+        status: "idle"
     },
     {
         uuid: v4(),
@@ -18,7 +19,8 @@ const PrinterInstances: PrinterInstance[] = [
         port: "8081",
         appid: "printman",
         key: "F5165607E2F34353BDB703B03055E6B0",
-        virtual: true
+        virtual: true,
+        status: "error"
     }, 
     {
         uuid: v4(),
@@ -27,7 +29,8 @@ const PrinterInstances: PrinterInstance[] = [
         port: "8082",
         appid: "printman",
         key: "F5165607E2F34353BDB703B03055E6B0",
-        virtual: true
+        virtual: true,
+        status: "paused"
     }, 
     {
         uuid: v4(),
@@ -36,7 +39,8 @@ const PrinterInstances: PrinterInstance[] = [
         port: "8083",
         appid: "printman",
         key: "F5165607E2F34353BDB703B03055E6B0",
-        virtual: true
+        virtual: true,
+        status: "printing"
     },     
     {
         uuid: v4(),
@@ -45,7 +49,8 @@ const PrinterInstances: PrinterInstance[] = [
         port: "8080",
         appid: "printman",
         key: "F5165607E2F34353BDB703B03055E6B0",
-        virtual: true
+        virtual: true,
+        status: "error"
     },
 ]
 
