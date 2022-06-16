@@ -40,12 +40,16 @@ export class PrinterController {
   async getPrinterFiles(@Param('id') id: number) {
     return this.printerService.getFiles(id)
   }
+  
 // @Param('id') id: number
   @Post("uploadFile")
   @UseInterceptors(AnyFilesInterceptor())
   uploadFile(@UploadedFiles() files: Array<Express.Multer.File>) {
-    files.forEach(f => {
-      fsA.writeFile(`./${Date.now()}-${f.originalname}`, f.buffer)
-    })
+    
+    return this.printerService.postFileToPrinter(files)
+    
+    // files.forEach(f => {
+    //   fsA.writeFile(`./${Date.now()}-${f.originalname}`, f.buffer)
+    // })
   }
 }
