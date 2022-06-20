@@ -41,17 +41,7 @@ const PrinterInstances: PrinterInstance[] = [
         key: "F5165607E2F34353BDB703B03055E6B0",
         virtual: true,
         status: "printing"
-    },     
-    {
-        uuid: v4(),
-        name: "printerD1",
-        ip: "127.0.0.1",
-        port: "8080",
-        appid: "printman",
-        key: "F5165607E2F34353BDB703B03055E6B0",
-        virtual: true,
-        status: "error"
-    },
+    }
 ]
 
 export default PrinterInstances
