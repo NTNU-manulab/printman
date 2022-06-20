@@ -1,30 +1,26 @@
 import { HttpService } from "@nestjs/axios"
 import { Injectable } from "@nestjs/common"
 import axios, { Axios, AxiosResponse } from "axios"
-import * as fs from "fs"
 import { PrinterGridModel, PrinterInstance } from "models"
 import generateMockPrinter from "src/mock/printerMock"
 import PrinterInstances from "./PrinterInstances"
 import FormData = require("form-data")
-import fetch from 'node-fetch'
-import { Observable } from 'rxjs';
-
 
 @Injectable()
 export class PrinterService {
   
   constructor(private httpService: HttpService) {
-    axios.interceptors.request.use(req => {
-      console.log("----- \n Axios Request: \n-----")
-      console.log(req)
-      return req
-    })
+    // axios.interceptors.request.use(req => {
+    //   console.log("----- \n Axios Request: \n-----")
+    //   console.log(req)
+    //   return req
+    // })
   
-    axios.interceptors.response.use(res => {
-      console.log("----- \n Axios response: \n-----")
-      console.log(res)
-      return res
-    })
+    // axios.interceptors.response.use(res => {
+    //   console.log("----- \n Axios response: \n-----")
+    //   console.log(res)
+    //   return res
+    // })
   }
 
 

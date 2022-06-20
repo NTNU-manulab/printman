@@ -8,17 +8,29 @@ import {
   Param,
 } from "@nestjs/common"
 import { AnyFilesInterceptor } from "@nestjs/platform-express"
-import { createReadStream, fstat } from "fs"
-import { PrinterGridModel } from "models"
+import { createReadStream } from "fs"
+import { PrinterGridModel, PrinterInstance } from "models"
 import { PrinterService } from "./printer.service"
-import * as fs from "fs"
-import * as fsA from "fs/promises"
-import { ResourceTypes } from "@nestjs/microservices/external/kafka.interface"
-import { getParametrizedRoute } from "next/dist/shared/lib/router/utils/route-regex"
+import { PrinterConnection } from "src/websocket/PrinterConnection"
+import PrinterInstances from "./PrinterInstances"
+
 
 @Controller("printer")
 export class PrinterController {
-  constructor(private readonly printerService: PrinterService) {}
+
+  printerConnectors: PrinterConnection[]
+  printerInstances: PrinterInstance[]
+
+  constructor(private readonly printerService: PrinterService) {
+
+    this.printerInstances = PrinterInstances
+    
+    this.printerConnectors = [] 
+
+    this.printerInstances.forEach(p => {
+      this.printerConnectors.push(new PrinterConnection(p))
+    })
+  }
 
   @Get()
   getPrinters(): PrinterGridModel[] {
