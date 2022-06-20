@@ -15,7 +15,7 @@ import { Dropzone } from "../components/Dropzone"
 import PrinterColorFilter from "../components/PrinterColorFilter"
 
 
-const API_URL = process.env.REACT_APP_PRINTER00
+export const API_URL = "http://192.168.1.20:3001"
 const WS_URL = "http://localhost:3001"
 
 export default function Index() {
@@ -38,7 +38,7 @@ export default function Index() {
 
   const socketInit = async () => {
     console.log(process.env.REACT_APP_API_URL)
-    const socket = io("http://localhost:3001")
+    const socket = io(API_URL)
 
     socket.on("connect", function () {
       socket.emit("printers", { test: "test" })
