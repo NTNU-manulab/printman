@@ -1,6 +1,5 @@
 import { PrinterInstance, PrinterStateModel } from "models";
 import axios from 'axios'
-import { CompressionTypes } from "@nestjs/microservices/external/kafka.interface";
 
 var WebSocketClient = require("websocket").client
 // var WebSocketConnection = require("websocket").connection
@@ -13,22 +12,25 @@ export class PrinterConnection {
     user: string
     state: PrinterStateModel
 
+    //todo: refactor to printer module
+    //todo: implement emitter on state update
+
+    //todo: change PrinterInstance to printer.entity
+    //todo: add connection error handling (connectivity check)
+
     constructor(printer: PrinterInstance){
         this.printer = printer
 
         this.client = new WebSocketClient()
 
-        // console.log(`PrinterConnection: ${this.printer.name}`)
-        // console.log(`this: ${JSON.stringify(this)}`)
-        // console.log(`client: ${JSON.stringify(this.client)}`)
         this.state = {
             uuid: this.printer.uuid,
             name: this.printer.name
         }
         
+        
         this.connect()
         
-        // console.log(this.state)
         // if (printer.name === "printer00") {
         //     setInterval(() => {
         //         console.log(this.printer.name)
@@ -61,7 +63,9 @@ export class PrinterConnection {
         
         this.client.on('connect', (connection) => {            
             connection.send(
-                JSON.stringify({subscribe:{state: true}}))
+                JSON.stringify({subscribe:{state: {logs: false}}}))
+            connection.send(
+                JSON.stringify({throttle: 4}))
             connection.send(
                 JSON.stringify({auth: `${this.user}:${this.session}`}))
                 

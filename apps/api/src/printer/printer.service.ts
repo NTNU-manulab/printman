@@ -1,15 +1,32 @@
 import { HttpService } from "@nestjs/axios"
 import { Injectable } from "@nestjs/common"
+import { InjectRepository } from "@nestjs/typeorm"
 import axios, { Axios, AxiosResponse } from "axios"
-import { PrinterGridModel, PrinterInstance } from "models"
+import { PrinterGridModel, PrinterInstance, PrinterStateModel } from "models"
 import generateMockPrinter from "src/mock/printerMock"
 import PrinterInstances from "./PrinterInstances"
 import FormData = require("form-data")
+import { Repository } from 'typeorm'
+import { Printer } from "./printer.entity"
+import { PrinterConnection } from "./PrinterConnection"
+
 
 @Injectable()
 export class PrinterService {
   
-  constructor(private httpService: HttpService) {
+  printerConnections: PrinterConnection[]
+  printerStates: PrinterStateModel[]
+
+  constructor(
+    private httpService: HttpService, 
+    @InjectRepository(Printer)
+    private printerRepo: Repository<Printer>) {
+
+      this.printerConnections = [] 
+      this.printerStates = []
+
+      this.printerRepo.find()
+      .then( pe => this.printerConnections.push(new PrinterConnection(pe)))
     // axios.interceptors.request.use(req => {
     //   console.log("----- \n Axios Request: \n-----")
     //   console.log(req)

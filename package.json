@@ -29,6 +29,7 @@
   "dependencies": {
     "@nestjs/axios": "^0.0.8",
     "@nestjs/core": "^8.4.5",
+    "@nestjs/typeorm": "^8.1.4",
     "@types/form-data": "^2.5.0",
     "@types/node": "^18.0.0",
     "@types/websocket": "^1.0.5",
@@ -41,9 +42,12 @@
     "nestjs": "^0.0.1",
     "next": "^12.1.6",
     "node-fetch": "^3.2.6",
+    "pg": "^8.7.3",
+    "postgres": "^3.2.4",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.5.5",
     "sockjs": "^0.3.24",
+    "typeorm": "^0.3.6",
     "uuid": "^8.3.2",
     "websocket": "^1.0.34"
   }
