@@ -1,14 +1,16 @@
 import { PrinterInstance, PrinterStateModel } from "models";
 import axios from 'axios'
 import { Printer } from "./printer.entity"
+import { Injectable } from "@nestjs/common"
 
 
 var WebSocketClient = require("websocket").client
 // var WebSocketConnection = require("websocket").connection
 
+@Injectable()
 export class PrinterConnection {
 
-    printer: PrinterInstance
+    printer: Printer
     client: any
     session: string
     user: string
@@ -20,6 +22,8 @@ export class PrinterConnection {
     //todo: change PrinterInstance to printer.entity
     //todo: add connection error handling (connectivity check)
 
+    //todo: find a way to set printer.entity.status from current.status.text. 
+    //  Event emitter? onStatusChange or something.
     constructor(printer: Printer){
         this.printer = printer
 
@@ -67,7 +71,7 @@ export class PrinterConnection {
             connection.send(
                 JSON.stringify({subscribe:{state: {logs: false}}}))
             connection.send(
-                JSON.stringify({throttle: 4}))
+                JSON.stringify({throttle: 2}))
             connection.send(
                 JSON.stringify({auth: `${this.user}:${this.session}`}))
                 
@@ -75,6 +79,7 @@ export class PrinterConnection {
             // this.state = JSON.parse(message.utf8Data.current)
             let current = JSON.parse(message.utf8Data).current
             this.state.current = current
+
 
             // console.log(message)
         })

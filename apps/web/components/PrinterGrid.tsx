@@ -1,6 +1,6 @@
 import { ReactJSXElement } from "@emotion/react/types/jsx-namespace"
 import { Box, styled } from "@mui/material"
-import { PrinterGridModel } from "models"
+import { PrinterGridModel, PrinterStateModel } from "models"
 import Link from "next/link"
 import React from "react"
 import { ReactNode } from "react"
@@ -9,18 +9,16 @@ import { PrinterCard } from "./PrinterCard"
 export const PrinterGrid = ({
   printers,
 }: {
-  printers: PrinterGridModel[]
+  printers: PrinterStateModel[]
 }): ReactJSXElement => {
   const PrinterList = (): JSX.Element => {
-    const printerList: ReactNode[] = printers.map((p: PrinterGridModel) => (
+    const printerList: ReactNode[] = printers.map((p: PrinterStateModel) => (
       <Link key={p.name} href={"/" + p.name}>
         <a>
         <PrinterCard
-          key={p.uuid}
           name={p.name}
-          printerState={p.printerState}
-          progress={p.progress}
           uuid={p.uuid}
+          current={p.current}
           />
           </a>
       </Link>

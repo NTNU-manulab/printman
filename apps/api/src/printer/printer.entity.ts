@@ -33,5 +33,4 @@ export class Printer implements PrinterInstance{
     status: string
 
 
-
 }

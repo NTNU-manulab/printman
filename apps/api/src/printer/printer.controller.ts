@@ -18,7 +18,7 @@ import PrinterInstances from "./PrinterInstances"
 @Controller("printer")
 export class PrinterController {
 
-  printerConnectors: PrinterConnection[]
+  printerConnectors: PrinterConnection[] 
   printerInstances: PrinterInstance[]
   printerStates: PrinterStateModel[]
 
