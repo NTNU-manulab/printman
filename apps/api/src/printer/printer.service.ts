@@ -3,36 +3,54 @@ import { Injectable } from "@nestjs/common"
 import { InjectRepository } from "@nestjs/typeorm"
 import axios, { Axios, AxiosResponse } from "axios"
 import { PrinterGridModel, PrinterInstance, PrinterStateModel } from "models"
-import generateMockPrinter from "src/mock/printerMock"
-import PrinterInstances from "./PrinterInstances"
+// import generateMockPrinter from "src/mock/printerMock"
+// import PrinterInstances from "./PrinterInstances"
 import FormData = require("form-data")
 import { Repository } from 'typeorm'
 import { Printer } from "./printer.entity"
 import { PrinterConnection } from "./PrinterConnection"
+import { Observable } from "rxjs"
 
+
+//todo: refactor all API usage to util method
 
 @Injectable()
 export class PrinterService {
   
   printerConnections: PrinterConnection[]
   printerStates: PrinterStateModel[]
+  printerStateObservable: Observable<PrinterStateModel[]>
 
   constructor(
-    private httpService: HttpService, 
+    private httpService: HttpService,
     @InjectRepository(Printer)
-    private printerRepo: Repository<Printer>) {
+    private printerRepo: Repository<Printer>
+  ) {
 
-      this.printerConnections = [] 
-      this.printerStates = []
+    this.printerConnections = []
+    this.printerStates = []
 
-      this.printerRepo.find()
-      .then( pe => this.printerConnections.push(new PrinterConnection(pe)))
+    this.printerRepo.find({where: {virtual: false}})
+      .then(printers =>
+        printers.forEach(p =>
+          this.printerConnections.push(new PrinterConnection(p))))
+    
+    this.printerStateObservable = new Observable(sub => {
+      setInterval( () => { 
+        this.printerConnections.forEach((pc, i) => this.printerStates[i] = pc.state) 
+        sub.next(this.printerStates)
+      }, 1000)
+    })
+
+
+
+
     // axios.interceptors.request.use(req => {
     //   console.log("----- \n Axios Request: \n-----")
     //   console.log(req)
     //   return req
     // })
-  
+
     // axios.interceptors.response.use(res => {
     //   console.log("----- \n Axios response: \n-----")
     //   console.log(res)
@@ -41,27 +59,34 @@ export class PrinterService {
   }
 
 
-  Printers: PrinterInstance[] = PrinterInstances
+  // Printers: PrinterInstance[] = PrinterInstances
 
-  getPrinters(): PrinterGridModel[] {
-    return generateMockPrinter(30)
+  getPrinterStateObservable(): Observable<PrinterStateModel[]> {
+    return this.printerStateObservable
+  }
+
+  getPrinters(): PrinterStateModel[] {
+    return this.printerStates
     // const json = JSON.stringify(printers)
     // console.log(json)
   }
 
-  getPrinter(): PrinterGridModel[] {
-    // console.log(printer)
-    return generateMockPrinter(1)
-  }
+  // getPrinter(): PrinterGridModel[] {
+  //   // console.log(printer)
+  //   return generateMockPrinter(1)
+  // }
 
+  
   async getFiles(printerId: number): Promise<any> {
     // This axios GET request works to get file listing from OP, and the controller endpoint that uses it also returns the information correctly.
-    if (this.Printers[printerId]) {
+    let printer = this.printerRepo.findOneOrFail({where: {id: printerId}})
+
+    if ((await printer)) {
     return await axios.get(
-      'http://'+this.Printers[printerId].ip+':'+this.Printers[printerId].port+'/api/files', 
+      'http://'+(await printer).ip+':'+(await printer).port+'/api/files', 
       {
         headers: {
-          'Authorization': 'Bearer ' + this.Printers[printerId].key
+          'Authorization': 'Bearer ' + (await printer).key
         }
       } 
       )
@@ -113,7 +138,7 @@ export class PrinterService {
 
     //todo: append "select" and "print" fields to form
     
-    var printer = this.Printers.find(f => f.status === "idle")
+    var printer = this.printerRepo.findOneOrFail({where: {status: "idle"}})
 
     // Needed for 'boundary' header in multipart
     var formHeaders = formData.getHeaders()
@@ -125,12 +150,12 @@ export class PrinterService {
     var formBuff = formData.getBuffer()
 
     return await axios.post(
-      `HTTP://${printer.ip}:${printer.port}/api/files/local`,
+      `HTTP://${(await printer).ip}:${(await printer).port}/api/files/local`,
       // formBuff.toString('utf-8'),
       formBuff,
     {
       headers: {
-        'Authorization': 'Bearer ' + printer.key,
+        'Authorization': 'Bearer ' + (await printer).key,
         ...formHeaders,
         'Content-Length': formLength,
       }

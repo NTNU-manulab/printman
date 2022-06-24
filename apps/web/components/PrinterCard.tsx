@@ -7,7 +7,7 @@ import {
   LinearProgress,
   Typography,
 } from "@mui/material"
-import { PrinterGridModel } from "models"
+import { PrinterGridModel, PrinterStateModel } from "models"
 import React from "react"
 
 function LinearProgressWithLabel(props: {
@@ -38,8 +38,8 @@ function LinearProgressWithLabel(props: {
   )
 }
 
-export const PrinterCard = (props: PrinterGridModel, key: string) => {
-  const { name, printerState, progress } = props
+export const PrinterCard = (props: PrinterStateModel, key: string) => {
+  const { name, current } = props
 
   const timeFromSeconds = (time: number) => {
     let timeLeft = time
@@ -63,19 +63,19 @@ export const PrinterCard = (props: PrinterGridModel, key: string) => {
   }
 
   const findBackgroundColour = (): Colour | undefined => {
-    let color = Object.entries(printerState.flags)
-      .filter(([k, v]) => v === true && k !== "operational")
-      .map(k => Object.entries(Colour).find(([ek, ev]) => ek === k[0])?.[1])[0]
-    return color
+    // let color = Object.entries(current?.state?.flags)
+    //   .filter(([k, v]) => v === true && k !== "operational")
+    //   .map(k => Object.entries(Colour).find(([ek, ev]) => ek === k[0])?.[1])[0]
+    return Colour.ready
   }
 
   const PrinterTime = () => {
-    const estimatedTimeObject = timeFromSeconds(progress.printTimeTotal)
-    const remainingTimeObject = timeFromSeconds(progress.printTimeLeft)
+    const estimatedTimeObject = timeFromSeconds(current?.progress?.printTimeTotal ? current!.progress!.printTimeTotal : 0)
+    const remainingTimeObject = timeFromSeconds(current?.progress?.printTimeLeft ? current!.progress!.printTimeLeft : 0)
 
     return (
       <>
-        {!printerState.flags.ready ? (
+        {!current?.state?.flags.ready ? (
           <CardContent
             sx={{
               display: "inline-grid",
@@ -128,7 +128,7 @@ export const PrinterCard = (props: PrinterGridModel, key: string) => {
 
       <Typography component={"div"}>
         <CardContent> {name}</CardContent>
-        <CardContent>{printerState.text}</CardContent>
+        <CardContent>{current?.state?.text}</CardContent>
         {PrinterTime()}
       </Typography>
       <CardContent
@@ -143,7 +143,7 @@ export const PrinterCard = (props: PrinterGridModel, key: string) => {
       >
         <LinearProgressWithLabel
           variant="determinate"
-          value={printerState.flags.ready ? 0 : progress.completion}
+          value={ (current?.state?.flags.ready) ? 0 : current!.progress!.completion}
         />
       </CardContent>
     </Card>

@@ -1,5 +1,7 @@
 import { PrinterInstance, PrinterStateModel } from "models";
 import axios from 'axios'
+import { Printer } from "./printer.entity"
+
 
 var WebSocketClient = require("websocket").client
 // var WebSocketConnection = require("websocket").connection
@@ -18,7 +20,7 @@ export class PrinterConnection {
     //todo: change PrinterInstance to printer.entity
     //todo: add connection error handling (connectivity check)
 
-    constructor(printer: PrinterInstance){
+    constructor(printer: Printer){
         this.printer = printer
 
         this.client = new WebSocketClient()

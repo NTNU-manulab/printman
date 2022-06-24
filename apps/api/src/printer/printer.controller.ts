@@ -23,25 +23,11 @@ export class PrinterController {
   printerStates: PrinterStateModel[]
 
   constructor(private readonly printerService: PrinterService) {
-
-    //todo: refactor to printer.service
-    this.printerInstances = PrinterInstances
-    
-    this.printerConnectors = [] 
-    this.printerStates = []
-
-    this.printerInstances.forEach(p => {
-      this.printerConnectors.push(new PrinterConnection(p))
-    })
-
-    setInterval(
-      () => { this.printerConnectors.forEach((pc, i) => this.printerStates[i] = pc.state ) }, 1000
-    )
     
   }
 
   @Get()
-  getPrinters(): PrinterGridModel[] {
+  getPrinters(): PrinterStateModel[] {
     return this.printerService.getPrinters()
   }
 
