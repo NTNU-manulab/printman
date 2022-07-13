@@ -38,8 +38,6 @@ export class PrinterService {
     this.printerStateObservable = this.getPrinterStateObservable()
 
 
-
-
     // axios.interceptors.request.use(req => {
     //   console.log("----- \n Axios Request: \n-----")
     //   console.log(req)

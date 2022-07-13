@@ -18,12 +18,12 @@ export class PrinterConnection {
 
     //todo: refactor to printer module
     //todo: implement emitter on state update
-
-    //todo: change PrinterInstance to printer.entity
-    //todo: add connection error handling (connectivity check)
-
     //todo: find a way to set printer.entity.status from current.status.text. 
     //  Event emitter? onStatusChange or something.
+
+    //todo: add connection error handling (connectivity check)
+
+    
     constructor(printer: Printer){
         this.printer = printer
 
@@ -79,7 +79,8 @@ export class PrinterConnection {
             // this.state = JSON.parse(message.utf8Data.current)
             let current = JSON.parse(message.utf8Data).current
             this.state.current = current
-
+            //todo: if (current.state.text !== this.state.current.state.text) emitStatusUpdate()
+            // or something...
 
             // console.log(message)
         })
