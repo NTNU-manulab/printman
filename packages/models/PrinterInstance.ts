@@ -6,9 +6,10 @@ interface PrinterInstance {
     appid: string
     key: string
     virtual: boolean
-    status: Status
+    status: string
+
 }
 
-type Status = "idle" | "printing" | "error" | "paused"
+// type Status = "idle" | "printing" | "error" | "paused"
 
 export default PrinterInstance

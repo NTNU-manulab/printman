@@ -1,34 +1,42 @@
 import { PrinterInstance, PrinterStateModel } from "models";
 import axios from 'axios'
-import { CompressionTypes } from "@nestjs/microservices/external/kafka.interface";
+import { Printer } from "./printer.entity"
+import { Injectable } from "@nestjs/common"
+
 
 var WebSocketClient = require("websocket").client
 // var WebSocketConnection = require("websocket").connection
 
+@Injectable()
 export class PrinterConnection {
 
-    printer: PrinterInstance
+    printer: Printer
     client: any
     session: string
     user: string
     state: PrinterStateModel
 
-    constructor(printer: PrinterInstance){
+    //todo: refactor to printer module
+    //todo: implement emitter on state update
+    //todo: find a way to set printer.entity.status from current.status.text. 
+    //  Event emitter? onStatusChange or something.
+
+    //todo: add connection error handling (connectivity check)
+
+    
+    constructor(printer: Printer){
         this.printer = printer
 
         this.client = new WebSocketClient()
 
-        // console.log(`PrinterConnection: ${this.printer.name}`)
-        // console.log(`this: ${JSON.stringify(this)}`)
-        // console.log(`client: ${JSON.stringify(this.client)}`)
         this.state = {
             uuid: this.printer.uuid,
             name: this.printer.name
         }
         
+        
         this.connect()
         
-        // console.log(this.state)
         // if (printer.name === "printer00") {
         //     setInterval(() => {
         //         console.log(this.printer.name)
@@ -61,7 +69,9 @@ export class PrinterConnection {
         
         this.client.on('connect', (connection) => {            
             connection.send(
-                JSON.stringify({subscribe:{state: true}}))
+                JSON.stringify({subscribe:{state: {logs: false}}}))
+            connection.send(
+                JSON.stringify({throttle: 2}))
             connection.send(
                 JSON.stringify({auth: `${this.user}:${this.session}`}))
                 
@@ -69,6 +79,8 @@ export class PrinterConnection {
             // this.state = JSON.parse(message.utf8Data.current)
             let current = JSON.parse(message.utf8Data).current
             this.state.current = current
+            //todo: if (current.state.text !== this.state.current.state.text) emitStatusUpdate()
+            // or something...
 
             // console.log(message)
         })

@@ -7,9 +7,10 @@ import {
   LinearProgress,
   Typography,
 } from "@mui/material"
-import { PrinterGridModel } from "models"
+import { color } from "@mui/system"
+import { PrinterGridModel, PrinterStateModel } from "models"
 import React from "react"
-import { API_URL } from "../pages"
+import { LOCAL_API_URL } from "../pages"
 
 function LinearProgressWithLabel(props: {
   value: number
@@ -39,8 +40,8 @@ function LinearProgressWithLabel(props: {
   )
 }
 
-export const PrinterCard = (props: PrinterGridModel, key: string) => {
-  const { name, printerState, progress } = props
+export const PrinterCard = (props: PrinterStateModel, key: string) => {
+  const { name, uuid, current } = props
 
   const timeFromSeconds = (time: number) => {
     let timeLeft = time
@@ -61,22 +62,31 @@ export const PrinterCard = (props: PrinterGridModel, key: string) => {
     paused = "#FFEEA1",
     ready = "#A8F5A2",
     printing = "#FFFFFF",
+    closedOrError = "#999999"
   }
 
   const findBackgroundColour = (): Colour | undefined => {
-    let color = Object.entries(printerState.flags)
+    let color = undefined
+    if (current?.state?.flags) {
+      color = Object.entries(current?.state?.flags)
       .filter(([k, v]) => v === true && k !== "operational")
       .map(k => Object.entries(Colour).find(([ek, ev]) => ek === k[0])?.[1])[0]
+    }
+    
+    switch (current?.state?.flags) {
+        default:
+          }
+
     return color
   }
 
   const PrinterTime = () => {
-    const estimatedTimeObject = timeFromSeconds(progress.printTimeTotal)
-    const remainingTimeObject = timeFromSeconds(progress.printTimeLeft)
+    const estimatedTimeObject = timeFromSeconds(current?.progress?.printTimeLeft ? current!.progress!.printTimeLeft : 0)
+    const currentTimeObject = timeFromSeconds(current?.progress?.printTime ? current!.progress!.printTime : 0)
 
     return (
       <>
-        {!printerState.flags.ready ? (
+        {!current?.state?.flags.ready ? (
           <CardContent
             sx={{
               display: "inline-grid",
@@ -85,18 +95,20 @@ export const PrinterCard = (props: PrinterGridModel, key: string) => {
             }}
           >
             <Typography align="left">
-              {remainingTimeObject.days ? remainingTimeObject.days + `D:` : ``}
-              {remainingTimeObject.hours
-                ? remainingTimeObject.hours + `H:`
+              {`Elapsed: `}
+              {currentTimeObject.days ? currentTimeObject.days + `D:` : ``}
+              {currentTimeObject.hours
+                ? currentTimeObject.hours + `H:`
                 : ``}
-              {remainingTimeObject.minutes
-                ? remainingTimeObject.minutes + `M:`
+              {currentTimeObject.minutes
+                ? currentTimeObject.minutes + `M:`
                 : ``}
-              {remainingTimeObject.seconds + `S`}
+              {currentTimeObject.seconds + `S`}
             </Typography>
             <Box sx={{ minWidth: "auto" }} />
             <Typography align="right">
               {" "}
+              {`Remaining: `}
               {estimatedTimeObject.days ? estimatedTimeObject.days + `D:` : ``}
               {estimatedTimeObject.hours
                 ? estimatedTimeObject.hours + `H:`
@@ -125,11 +137,11 @@ export const PrinterCard = (props: PrinterGridModel, key: string) => {
         },
       }}
     >
-      <CardMedia src={API_URL + "/printer/snapshot"} component="img" />
+      <CardMedia src={LOCAL_API_URL + "/printer/snapshot"} component="img" />
 
       <Typography component={"div"}>
         <CardContent> {name}</CardContent>
-        <CardContent>{printerState.text}</CardContent>
+        <CardContent>{current?.state?.text}</CardContent>
         {PrinterTime()}
       </Typography>
       <CardContent
@@ -144,7 +156,7 @@ export const PrinterCard = (props: PrinterGridModel, key: string) => {
       >
         <LinearProgressWithLabel
           variant="determinate"
-          value={printerState.flags.ready ? 0 : progress.completion}
+          value={ (current?.state?.flags.ready) ? 0 : current!.progress!.completion}
         />
       </CardContent>
     </Card>

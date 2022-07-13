@@ -9,31 +9,25 @@ import {
 } from "@nestjs/common"
 import { AnyFilesInterceptor } from "@nestjs/platform-express"
 import { createReadStream } from "fs"
-import { PrinterGridModel, PrinterInstance } from "models"
+import { PrinterGridModel, PrinterInstance, PrinterStateModel } from "models"
 import { PrinterService } from "./printer.service"
-import { PrinterConnection } from "src/websocket/PrinterConnection"
+import { PrinterConnection } from "./PrinterConnection"
 import PrinterInstances from "./PrinterInstances"
 
 
 @Controller("printer")
 export class PrinterController {
 
-  printerConnectors: PrinterConnection[]
+  printerConnectors: PrinterConnection[] 
   printerInstances: PrinterInstance[]
+  printerStates: PrinterStateModel[]
 
   constructor(private readonly printerService: PrinterService) {
-
-    this.printerInstances = PrinterInstances
     
-    this.printerConnectors = [] 
-
-    this.printerInstances.forEach(p => {
-      this.printerConnectors.push(new PrinterConnection(p))
-    })
   }
 
   @Get()
-  getPrinters(): PrinterGridModel[] {
+  getPrinters(): PrinterStateModel[] {
     return this.printerService.getPrinters()
   }
 

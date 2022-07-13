@@ -1,21 +1,49 @@
 import { HttpService } from "@nestjs/axios"
 import { Injectable } from "@nestjs/common"
+import { InjectRepository } from "@nestjs/typeorm"
 import axios, { Axios, AxiosResponse } from "axios"
-import { PrinterGridModel, PrinterInstance } from "models"
-import generateMockPrinter from "src/mock/printerMock"
-import PrinterInstances from "./PrinterInstances"
+import { PrinterGridModel, PrinterInstance, PrinterStateModel } from "models"
+// import generateMockPrinter from "src/mock/printerMock"
+// import PrinterInstances from "./PrinterInstances"
 import FormData = require("form-data")
+import { Repository } from 'typeorm'
+import { Printer } from "./printer.entity"
+import { PrinterConnection } from "./PrinterConnection"
+import { Observable, find, first } from "rxjs"
+
+
+//todo: refactor all API usage to util method
 
 @Injectable()
 export class PrinterService {
   
-  constructor(private httpService: HttpService) {
+  printerConnections: PrinterConnection[] = []
+  printerStates: PrinterStateModel[] = []
+  printerStateObservable: Observable<PrinterStateModel[]>
+
+  constructor(
+    private httpService: HttpService,
+    @InjectRepository(Printer)
+    private printerRepo: Repository<Printer>
+  ) {
+
+    // set up printer connections
+    this.printerRepo.find({where: {virtual: false}})
+      .then(printers =>
+        printers.forEach(p =>
+          this.printerConnections.push(new PrinterConnection(p))))
+    
+
+    // create printerState observable
+    this.printerStateObservable = this.getPrinterStateObservable()
+
+
     // axios.interceptors.request.use(req => {
     //   console.log("----- \n Axios Request: \n-----")
     //   console.log(req)
     //   return req
     // })
-  
+
     // axios.interceptors.response.use(res => {
     //   console.log("----- \n Axios response: \n-----")
     //   console.log(res)
@@ -23,28 +51,43 @@ export class PrinterService {
     // })
   }
 
+  getPrinterStateObservable(): Observable<PrinterStateModel[]> {
+    if (this.printerStateObservable) {
+      return this.printerStateObservable  
+    } else {
+      return new Observable(sub => {
+        setInterval(() => {
+          this.printerConnections.forEach((pc, i) => this.printerStates[i] = pc.state)
+          sub.next(this.printerStates)    
+        }, 1000)
 
-  Printers: PrinterInstance[] = PrinterInstances
+      })
+    }
+    
+  }
 
-  getPrinters(): PrinterGridModel[] {
-    return generateMockPrinter(30)
+  getPrinters(): PrinterStateModel[] {
+    return this.printerStates
     // const json = JSON.stringify(printers)
     // console.log(json)
   }
 
-  getPrinter(): PrinterGridModel[] {
-    // console.log(printer)
-    return generateMockPrinter(1)
-  }
+  // getPrinter(): PrinterGridModel[] {
+  //   // console.log(printer)
+  //   return generateMockPrinter(1)
+  // }
 
+  
   async getFiles(printerId: number): Promise<any> {
     // This axios GET request works to get file listing from OP, and the controller endpoint that uses it also returns the information correctly.
-    if (this.Printers[printerId]) {
+    let printer = this.printerRepo.findOneOrFail({where: {id: printerId}})
+
+    if ((await printer)) {
     return await axios.get(
-      'http://'+this.Printers[printerId].ip+':'+this.Printers[printerId].port+'/api/files', 
+      'http://'+(await printer).ip+':'+(await printer).port+'/api/files', 
       {
         headers: {
-          'Authorization': 'Bearer ' + this.Printers[printerId].key
+          'Authorization': 'Bearer ' + (await printer).key
         }
       } 
       )
@@ -80,6 +123,24 @@ export class PrinterService {
     return "./snapshot.png"
   }
 
+  async updatePrinterStatus(printer: Printer, newStatus: string) {
+    // let p = this.printerStates.find(p => p.uuid === printer.uuid)
+    // .find(p => p.uuid === printer.uuid)
+    
+    // let test = this.printerStateObservable.pipe(
+    //   first(ps => {
+    //     newStatus = ps.find(p => p.uuid === printer.uuid).current.state.text
+    //     return !!newStatus
+    //   }
+    //     ));
+
+        // We want to extract the 
+    await this.printerRepo
+    .update(printer.id, {status: newStatus})
+    .then(() => console.log(`Printer status set to ${newStatus}`))
+    .catch((err) => console.log(err))
+  }
+
   async postFileToPrinter(files: Array<Express.Multer.File> ): Promise<any> {
     
     const formData = new FormData()
@@ -96,7 +157,9 @@ export class PrinterService {
 
     //todo: append "select" and "print" fields to form
     
-    var printer = this.Printers.find(f => f.status === "idle")
+    var printer = (await this.printerRepo
+      .findOneOrFail({where: {status: "Operational", virtual: false}})
+      .then(res => res))
 
     // Needed for 'boundary' header in multipart
     var formHeaders = formData.getHeaders()
@@ -117,10 +180,21 @@ export class PrinterService {
         ...formHeaders,
         'Content-Length': formLength,
       }
-    }).then(res => {
+    }).then(async res => {
+      //todo: update printer.entity.status value to match OP 'current.state.text'
+      
       let code = res.status
       switch(code){
-        case 200: // OK
+        case 201: // OK
+        await axios.get(`HTTP://${printer.ip}:${printer.port}/api/printer?exclude=temperature,sd`,     {
+          headers: {
+            'Authorization': 'Bearer ' + printer.key,
+            ...formHeaders,
+            'Content-Length': formLength,
+          }
+        })
+        .then( res => this.updatePrinterStatus(printer, res.data.state.text))
+          
           return res.data
         case 400: // Bad Request
           // If no 'file' or 'foldername' are included in the request, 
