@@ -17,8 +17,9 @@ import { Dropzone } from "../components/Dropzone"
 import PrinterColorFilter from "../components/PrinterColorFilter"
 
 console.log(`NODE_ENV: ${process.env.NODE_ENV}`)
-console.log(`REACT_APP_BASE_URL: ${process.env.REACT_APP_BASE_URL}`)
-export const API_URL = process.env.REACT_APP_BASE_URL || "http://localhost:3001"
+console.log(`NEXT_PUBLIC_BASE_URL: ${process.env.NEXT_PUBLIC_BASE_URL}`)
+export const API_URL = process.env.NEXT_PUBLIC_BASE_URL || "" // keep blank to detect errors with .env 
+// "http://localhost:3001"
 
 export default function Index() {
   const [printers, setPrinters] = useState<PrinterStateModel[]>([])

@@ -45,7 +45,7 @@ const Printer = () => {
   }, [])
 
   const socketInit = async () => {
-    const socket = io(process.env.REACT_APP_BASE_URL!)
+    const socket = io(API_URL)
 
     socket.on("connect", function () {
       socket.emit("events", { test: "test" })
