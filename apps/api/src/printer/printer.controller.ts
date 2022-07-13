@@ -34,7 +34,7 @@ export class PrinterController {
   @Get("snapshot")
   async getSnapshot() {
     let path: string | Buffer = await this.printerService.getPrinterSnapshot()
-    console.log(path)
+    // console.log(path)
     const file = createReadStream(path)
 
     let stream = new StreamableFile(file)

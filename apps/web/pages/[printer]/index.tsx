@@ -16,6 +16,7 @@ import {
 import { Line } from 'react-chartjs-2'
 import { Printer } from 'models'
 import { io } from 'socket.io-client'
+import { LOCAL_API_URL, LOCAL_WS_URL } from '../index'
   
   ChartJS.register(
   CategoryScale,
@@ -44,7 +45,7 @@ const Printer = () => {
   }, [])
 
   const socketInit = async () => {
-    const socket = io("http://localhost:3001")
+    const socket = io(LOCAL_WS_URL)
 
     socket.on("connect", function () {
       socket.emit("events", { test: "test" })
@@ -82,7 +83,7 @@ const Printer = () => {
               </Grid>
             </Grid>
             <Grid item>
-              <img src="http://localhost:3001/printer/snapshot" />
+              <img src= {LOCAL_API_URL + '/printer/snapshot'} />
             </Grid>
           </Grid>
           <Grid item>
