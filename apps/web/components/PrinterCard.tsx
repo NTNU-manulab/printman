@@ -10,7 +10,7 @@ import {
 import { color } from "@mui/system"
 import { PrinterGridModel, PrinterStateModel } from "models"
 import React from "react"
-import { LOCAL_API_URL } from "../pages"
+import { API_URL } from "../pages"
 
 function LinearProgressWithLabel(props: {
   value: number
@@ -137,7 +137,7 @@ export const PrinterCard = (props: PrinterStateModel, key: string) => {
         },
       }}
     >
-      <CardMedia src={LOCAL_API_URL + "/printer/snapshot"} component="img" />
+      <CardMedia src={API_URL + "/printer/snapshot"} component="img" />
 
       <Typography component={"div"}>
         <CardContent> {name}</CardContent>
